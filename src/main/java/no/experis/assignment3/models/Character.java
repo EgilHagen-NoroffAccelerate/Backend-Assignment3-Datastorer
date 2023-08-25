@@ -10,13 +10,18 @@ public class Character {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "char_id")
     private int id;
-    private String name;
-    private String alias;
-    private String gender;
-    private URL photo;
 
-    public Character() {
-    }
+    @Column(name = "name", length = 255, nullable = false)
+    private String name;
+
+    @Column(name = "alias", length = 255, nullable = false)
+    private String alias;
+
+    @Column(name = "gender", length = 255, nullable = false)
+    private String gender;
+
+    @Column(name = "photo", length = 255, nullable = false)
+    private URL photo;
 
     public Character(int id, String name, String alias, String gender, URL photo) {
         this.id = id;
@@ -24,6 +29,10 @@ public class Character {
         this.alias = alias;
         this.gender = gender;
         this.photo = photo;
+    }
+
+    public Character() {
+
     }
 
     public void setId(int id) {

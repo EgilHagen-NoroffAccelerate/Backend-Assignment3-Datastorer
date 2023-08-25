@@ -1,20 +1,28 @@
 package no.experis.assignment3.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.net.URL;
 
 @Entity
 public class Movies {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "movie_id", length = 255, nullable = false)
     private int id;
+    @Column(name = "title", length = 255, nullable = false)
     private String title;
+    @Column(name = "genre", length = 255, nullable = false)
     private String genre;
+    @Column(name = "year", length = 255, nullable = false)
     private int year;
+    @Column(name = "director", length = 255, nullable = false)
     private String director;
+    @Column(name = "poster", length = 255, nullable = false)
     private URL poster;
+    @Column(name = "trailer", length = 255, nullable = false)
     private URL trailer;
+
 
     public Movies() {
     }
