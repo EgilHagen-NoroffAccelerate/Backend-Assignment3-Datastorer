@@ -1,43 +1,23 @@
 package no.experis.assignment3.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 public class Franchise {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "fran_id")
+    @Column(name = "franchise_id")
     private int id;
 
-    @Column(name = "name", length = 255, nullable = false)
+    @Column(length = 255, nullable = false)
     private String name;
 
-    @Column(name = "description", length = 1000, nullable = false)
-    private String description;
-
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    @OneToMany(mappedBy = "franchise")
+    private Set<Movie> movies;
 }
