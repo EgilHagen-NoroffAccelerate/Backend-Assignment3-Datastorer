@@ -1,67 +1,34 @@
 package no.experis.assignment3.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.net.URL;
+import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 public class Character {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "character_id")
     private int id;
+
+    @Column(length = 255, nullable = false)
     private String name;
+
+    @Column(length = 255, nullable = false)
     private String alias;
+
+    @Column(length = 255, nullable = false)
     private String gender;
+
+    @Column(length = 255, nullable = false)
     private URL photo;
 
-    public Character() {
-    }
+    @ManyToMany(mappedBy = "characters")
+    private Set<Movie> movies;
 
-    public Character(int id, String name, String alias, String gender, URL photo) {
-        this.id = id;
-        this.name = name;
-        this.alias = alias;
-        this.gender = gender;
-        this.photo = photo;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAlias() {
-        return alias;
-    }
-
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public URL getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(URL photo) {
-        this.photo = photo;
-    }
 }
