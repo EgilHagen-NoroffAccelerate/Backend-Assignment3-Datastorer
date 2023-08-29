@@ -15,7 +15,7 @@ public class Franchise {
     @Column(name = "franchise_id")
     private int id;
 
-    @Column(length = 255, nullable = false)
+    @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "franchise")

@@ -13,23 +13,23 @@ import java.util.Set;
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "movie_id", length = 255, nullable = false)
+    @Column(name = "movie_id", nullable = false)
     private int id;
-    @Column(length = 255, nullable = false)
+    @Column(nullable = false)
     private String title;
-    @Column(length = 255, nullable = false)
+    @Column(nullable = false)
     private String genre;
-    @Column(length = 255, nullable = false)
-    private int year;
-    @Column(length = 255, nullable = false)
+    @Column(name = "release_year", nullable = false)
+    private int releaseYear;
+    @Column(nullable = false)
     private String director;
-    @Column(length = 255, nullable = false)
+    @Column(nullable = false)
     private URL poster;
-    @Column(length = 255, nullable = false)
+    @Column(nullable = false)
     private URL trailer;
 
     @ManyToOne
-    @JoinColumn(name = "franchise_id")
+    @JoinColumn(name = "franchise_id", nullable = false)
     private Franchise franchise;
 
     @ManyToMany
