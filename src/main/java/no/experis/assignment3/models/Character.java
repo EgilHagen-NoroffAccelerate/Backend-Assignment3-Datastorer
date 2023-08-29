@@ -28,8 +28,7 @@ public class Character {
     @Column(nullable = false)
     private URL photo;
 
-    @ManyToMany(mappedBy = "character")
+    @ManyToMany(mappedBy = "characters")
     private Set<Movie> movies;
-
 
 }

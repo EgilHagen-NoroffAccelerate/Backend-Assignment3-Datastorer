@@ -29,7 +29,7 @@ public class Movie {
     private URL trailer;
 
     @ManyToOne
-    @JoinColumn(name = "franchise_id", nullable = false)
+    @JoinColumn(name = "franchise_id")
     private Franchise franchise;
 
     @ManyToMany
