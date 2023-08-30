@@ -1,36 +1,41 @@
 package no.experis.assignment3.services.character;
 
 import jakarta.transaction.Transactional;
+import no.experis.assignment3.exceptions.CharacterNotFoundException;
 import no.experis.assignment3.models.Character;
+import no.experis.assignment3.models.Movie;
 import no.experis.assignment3.repositories.CharacterRepository;
+import no.experis.assignment3.repositories.MovieRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
-    @Service
+@Service
     public class CharacterServiceImpl implements CharacterService {
 
+        private final Logger logger = LoggerFactory.getLogger(CharacterServiceImpl.class);
         private final CharacterRepository characterRepository;
+        private final MovieRepository movieRepository;
 
-        public CharacterServiceImpl(CharacterRepository characterRepository) {
+        public CharacterServiceImpl(CharacterRepository characterRepository, MovieRepository movieRepository) {
             this.characterRepository = characterRepository;
+            this.movieRepository = movieRepository;
         }
 
         @Override
         public Character findById(Integer id) {
             return characterRepository
                     .findById(id)
-                    .orElseThrow(() -> new characterNotFoundException(id));
+                    .orElseThrow(() -> new CharacterNotFoundException(id));
         }
 
         @Override
         public Collection<Character> findAll() {
             return characterRepository.findAll();
-        }
-
-        @Override
-        public Character add(Character entity) {
-            return null;
         }
 
         @Override
@@ -43,33 +48,34 @@ import java.util.Collection;
             return characterRepository.save(entity);
         }
 
+
         @Override
         @Transactional
         public void deleteById(Integer id) {
-            if(characterRepository.existsById(id)) {
-                Character character = characterRepository.findById(id).get();
-                character.setMovie(null);
-                character.getMovie().setCharacter(null);
-                characterRepository.delete(character);
-            }
+            characterRepository.deleteById(id);
         }
 
-        @Override
-        @Transactional
-        public void delete(Character entity) {
-            if(characterRepository.existsById(entity.getId())) {
-                Character character = characterRepository.findById(entity.getId()).get();
-                character.setMovie(null);
-                character.getMovie().setStudent(null);
-                characterRepository.delete(character);
-            }
-        }
-
-        @Override
-        @Transactional
-        public void updateMovie(int characterId, int movieId) {
-            characterRepository.updateCharacterByMovieById(characterId,movieId);
-        }
+    @Override
+    public Collection<Character> findAllByName(String name) {
+        return null;
     }
 
-}
+    @Override
+    public Collection<Movie> getMovies(int characterId) {
+        return characterRepository.findById(characterId).get().getMovies();
+    }
+
+    @Override
+    public void updateMovie(int characterId, int[] movies) {
+            Character character = characterRepository.findById(characterId).get();
+            Set<Movie> movieList = new HashSet<>();
+
+            for (int id: movies) {
+                movieList.add(movieRepository.findById(id).get());
+            }
+            character.setMovies(movieList);
+            characterRepository.save(character);
+        }
+
+    }
+
