@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+//@Autowired
 @RestController
 @RequestMapping("/api/characters")
 public class CharacterController {
@@ -27,17 +28,8 @@ public class CharacterController {
         this.characterMapper = characterMapper;
     }
 
-    /*@GetMapping("/{id}")
-    public ResponseEntity<Character> getCharacterById(@PathVariable Integer id) {
-        return ResponseEntity.ok(characterService.findById(id));
-    }*/
-
-    /*@GetMapping
-    public ResponseEntity<Collection<Character>> getAllCharacters() {
-        return ResponseEntity.ok(characterService.findAll());
-    }*/
-
     // Other CRUD operations and related endpoints
+
 
     @GetMapping
     @Operation(summary = "Gets all the characters")
@@ -98,5 +90,4 @@ public class CharacterController {
     }
 
 }
-
 

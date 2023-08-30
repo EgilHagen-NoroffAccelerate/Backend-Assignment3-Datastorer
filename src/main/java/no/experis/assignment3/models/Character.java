@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.net.URL;
 import java.util.Set;
 
 @Entity
@@ -26,9 +25,9 @@ public class Character {
     private String gender;
 
     @Column(nullable = false)
-    private URL photo;
+    private String photo;
 
-    @ManyToMany(mappedBy = "characters")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "characters")
     private Set<Movie> movies;
 
 }

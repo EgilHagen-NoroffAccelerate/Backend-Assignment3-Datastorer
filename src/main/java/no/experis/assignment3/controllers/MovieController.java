@@ -17,6 +17,16 @@ public class MovieController {
     }
 
    /* @GetMapping
+=======
+    private final MovieMapper movieMapper;
+
+    public MovieController(MovieService movieService, MovieMapper movieMapper) {
+        this.movieService = movieService;
+        this.movieMapper = movieMapper;
+    }
+
+    @GetMapping
+>>>>>>> mergebranch
     public ResponseEntity findAll() {
 
         return ResponseEntity.ok(movieMapper.projectToProjectSimpleDTO(
@@ -29,6 +39,8 @@ public class MovieController {
                 movieMapper.projectToProjectSimpleDTO(
                         movieService.findById(id)
                 ));
+<<<<<<< HEAD
     }*/
+
 }
 
