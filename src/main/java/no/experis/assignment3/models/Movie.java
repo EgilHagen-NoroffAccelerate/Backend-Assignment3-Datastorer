@@ -24,9 +24,9 @@ public class Movie {
     @Column(nullable = false)
     private String director;
     @Column(nullable = false)
-    private URL poster;
+    private String poster;
     @Column(nullable = false)
-    private URL trailer;
+    private String trailer;
 
     @ManyToOne
     @JoinColumn(name = "franchise_id")

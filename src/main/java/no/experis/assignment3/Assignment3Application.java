@@ -1,5 +1,6 @@
 package no.experis.assignment3;
 
+import no.experis.assignment3.repositories.CharacterRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,8 +10,6 @@ public class Assignment3Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Assignment3Application.class, args);
-
-
     }
 
 }

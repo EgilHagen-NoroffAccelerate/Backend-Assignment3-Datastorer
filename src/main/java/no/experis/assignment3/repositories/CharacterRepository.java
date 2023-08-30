@@ -11,8 +11,4 @@ import java.util.Optional;
 
 public interface CharacterRepository extends JpaRepository<Character, Integer> {
 
-    @Query(value = "SELECT name, alias, gender, photo FROM character WHERE name LIKE %?%",
-            nativeQuery = true)
-    Optional<List<Character>> findByNameContaining(String name);
-
 }
