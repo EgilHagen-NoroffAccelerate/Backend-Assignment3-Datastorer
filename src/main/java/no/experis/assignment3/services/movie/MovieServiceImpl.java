@@ -34,9 +34,5 @@ public class MovieServiceImpl implements MovieService {
     public void deleteById(Integer integer) {
 
     }
-
-    @Override
-    public void delete(Movie entity) {
-
-    }
+    
 }
