@@ -18,6 +18,6 @@ public class Franchise {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "franchise")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "franchise")
     private Set<Movie> movies;
 }

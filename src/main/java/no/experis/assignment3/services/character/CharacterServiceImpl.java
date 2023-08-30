@@ -57,12 +57,18 @@ public class CharacterServiceImpl implements CharacterService {
 
     @Override
     public Collection<Character> findAllByName(String name) {
-        return null;
+        return characterRepository.findAllByName(name);
     }
 
     @Override
     public Collection<Movie> getMovies(int characterId) {
-        return characterRepository.findById(characterId).get().getMovies();
+        Character character = characterRepository.findById(characterId)
+                .orElseThrow(() -> new CharacterNotFoundException(characterId));
+
+        Set<Movie> movies = character.getMovies();
+        logger.info("Movies for character ID {}: {}", characterId, movies);
+
+        return movies;
     }
 
     @Override
