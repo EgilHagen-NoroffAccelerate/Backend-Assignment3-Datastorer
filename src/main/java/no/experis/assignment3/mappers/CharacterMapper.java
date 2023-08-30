@@ -9,6 +9,7 @@ import org.mapstruct.Named;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface CharacterMapper {
@@ -20,7 +21,10 @@ public interface CharacterMapper {
 
     @Named(value = "movieToMovieId")
     default Set<Integer> map(Set<Movie> value) {
-        if (value == null) ;
-        return null;
+        if (value == null)
+            return null;
+        return value.stream()
+                .map(s -> s.getId())
+                .collect(Collectors.toSet());
     }
 }
