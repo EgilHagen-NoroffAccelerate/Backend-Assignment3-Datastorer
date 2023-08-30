@@ -7,3 +7,8 @@ INSERT INTO movie VALUES
                       ('1', '2', '200','Lucas Tran', 'Horror', 'www.linkedin.com', 'Lucas på tur', 'www.youtube.com'),
                       ('1', '3', '2000','Tage Munthe Berg', 'Horror', 'www.linkedin.com', 'Tage on trip', 'www.youtube.com'),
                       ('2', '4', '2020','Lucas, Egil og Tage', 'Komedie/Drama', 'www.linkedin.com', 'Three eeee musketeer', 'www.youtube.com');
+
+INSERT INTO character VALUES
+                      ('1', 'Pegil Plagen', 'Male', 'Egil Hagen', 'linkedin.com'),
+                      ('2', 'Loc the sock', 'Female', 'Lucas Tran', 'linkedin.com'),
+                      ('3', 'Tage in a cage', 'Male', 'Egil Hagen', 'linkedin.com');
