@@ -5,11 +5,14 @@ import no.experis.assignment3.repositories.FranchiseRepository;
 
 import java.util.Collection;
 
-public class FranchiseServiceImpl implements FranchiseService{
+public class FranchiseServiceImpl implements FranchiseService {
+
+    private final FranchiseRepository franchiseRepository;
 
     public FranchiseServiceImpl(FranchiseRepository franchiseRepository) {
         this.franchiseRepository = franchiseRepository;
     }
+
     @Override
     public Franchise findById(Integer integer) {
         return null;
@@ -32,11 +35,6 @@ public class FranchiseServiceImpl implements FranchiseService{
 
     @Override
     public void deleteById(Integer integer) {
-
-    }
-
-    @Override
-    public void delete(Franchise entity) {
 
     }
 }

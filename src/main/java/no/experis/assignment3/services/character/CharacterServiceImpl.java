@@ -10,72 +10,70 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service
     public class CharacterServiceImpl implements CharacterService {
 
-        private final Logger logger = LoggerFactory.getLogger(CharacterServiceImpl.class);
-        private final CharacterRepository characterRepository;
-        private final MovieRepository movieRepository;
+    private final Logger logger = LoggerFactory.getLogger(CharacterServiceImpl.class);
+    private final CharacterRepository characterRepository;
+    private final MovieRepository movieRepository;
 
-        public CharacterServiceImpl(CharacterRepository characterRepository, MovieRepository movieRepository) {
-            this.characterRepository = characterRepository;
-            this.movieRepository = movieRepository;
-        }
+    public CharacterServiceImpl(CharacterRepository characterRepository, MovieRepository movieRepository) {
+        this.characterRepository = characterRepository;
+        this.movieRepository = movieRepository;
+    }
 
         @Override
-        public Character findById(Integer id) {
+        public Character findById (Integer id){
             return characterRepository
                     .findById(id)
                     .orElseThrow(() -> new CharacterNotFoundException(id));
         }
 
         @Override
-        public Collection<Character> findAll() {
+        public Collection<Character> findAll () {
             return characterRepository.findAll();
         }
 
+
         @Override
-        public Character add(Character entity) {
+        public Character add (Character entity){
             return characterRepository.save(entity);
         }
 
         @Override
-        public Character update(Character entity) {
+        public Character update (Character entity){
             return characterRepository.save(entity);
         }
-
 
         @Override
         @Transactional
-        public void deleteById(Integer id) {
+        public void deleteById (Integer id){
             characterRepository.deleteById(id);
         }
 
-    @Override
-    public Collection<Character> findAllByName(String name) {
-        return null;
-    }
+        @Override
+        public Collection<Character> findAllByName (String name){
+            return null;
+        }
 
-    @Override
-    public Collection<Movie> getMovies(int characterId) {
-        return characterRepository.findById(characterId).get().getMovies();
-    }
+        @Override
+        public Collection<Movie> getMovies ( int characterId){
+            return characterRepository.findById(characterId).get().getMovies();
+        }
 
-    @Override
-    public void updateMovie(int characterId, int[] movies) {
+        @Override
+        public void updateMovie ( int characterId, int[] movies){
             Character character = characterRepository.findById(characterId).get();
             Set<Movie> movieList = new HashSet<>();
 
-            for (int id: movies) {
+            for (int id : movies) {
                 movieList.add(movieRepository.findById(id).get());
             }
             character.setMovies(movieList);
             characterRepository.save(character);
         }
-
     }
+
 
