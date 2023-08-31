@@ -56,7 +56,7 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     @Override
-    public Collection<Character> findAllByName(String name) {
+    public Collection<Character> findCharacterByName(String name) {
         return characterRepository.findAllByName(name);
     }
 

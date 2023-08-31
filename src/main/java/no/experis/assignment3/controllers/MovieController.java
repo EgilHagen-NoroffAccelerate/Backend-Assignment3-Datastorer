@@ -1,5 +1,6 @@
 package no.experis.assignment3.controllers;
 
+import no.experis.assignment3.mappers.MovieMapper;
 import no.experis.assignment3.services.movie.MovieService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,14 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class MovieController {
 
     private final MovieService movieService;
-    //private final MovieMapper movieMapper;
-
-    public MovieController(MovieService movieService) {
-        this.movieService = movieService;
-    }
-
-   /* @GetMapping
-=======
     private final MovieMapper movieMapper;
 
     public MovieController(MovieService movieService, MovieMapper movieMapper) {
@@ -25,21 +18,25 @@ public class MovieController {
         this.movieMapper = movieMapper;
     }
 
+    /*
     @GetMapping
->>>>>>> mergebranch
+    @Operation(summary = "Gets all the movies")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Success",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = CharacterDTO.class)))
+                    }
+            )
+    })
     public ResponseEntity findAll() {
-
-        return ResponseEntity.ok(movieMapper.projectToProjectSimpleDTO(
-                movieService.findAll()));
-    }
-
-    @GetMapping("{id}")
-    public ResponseEntity findById(@PathVariable int id) {
         return ResponseEntity.ok(
-                movieMapper.projectToProjectSimpleDTO(
-                        movieService.findById(id)
-                ));
-<<<<<<< HEAD
+                movieMapper.movieToMovieDTO(
+
+                )
+        );
     }*/
 
 }
