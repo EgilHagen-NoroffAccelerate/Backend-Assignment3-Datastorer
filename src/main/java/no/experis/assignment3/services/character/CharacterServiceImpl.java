@@ -38,7 +38,6 @@ public class CharacterServiceImpl implements CharacterService {
         return characterRepository.findAll();
     }
 
-
     @Override
     public Character add(Character entity) {
         return characterRepository.save(entity);
@@ -52,7 +51,17 @@ public class CharacterServiceImpl implements CharacterService {
     @Override
     @Transactional
     public void deleteById(Integer id) {
-        characterRepository.deleteById(id);
+        if (characterRepository.existsById(id)) {
+            Character character = characterRepository.findById(id).get();
+
+            for (Movie movie : character.getMovies()) {
+                movie.getCharacters().remove(character);
+            }
+
+            character.getMovies().clear();
+
+            characterRepository.delete(character);
+        }
     }
 
     @Override
@@ -65,21 +74,35 @@ public class CharacterServiceImpl implements CharacterService {
         Character character = characterRepository.findById(characterId)
                 .orElseThrow(() -> new CharacterNotFoundException(characterId));
 
-        Set<Movie> movies = character.getMovies();
-        logger.info("Movies for character ID {}: {}", characterId, movies);
-
-        return movies;
+        return character.getMovies();
     }
 
     @Override
+    @Transactional
     public void updateMovie(int characterId, int[] movies) {
-        Character character = characterRepository.findById(characterId).get();
-        Set<Movie> movieList = new HashSet<>();
+        try {
+            Character character = characterRepository.findById(characterId).orElse(null);
+            if (character == null) {
+                System.out.println("Character not found.");
+                return;
+            }
 
-        for (int id : movies) {
-            movieList.add(movieRepository.findById(id).get());
+            Set<Movie> movieList = new HashSet<>();
+            for (int id : movies) {
+                Movie movie = movieRepository.findById(id).orElse(null);
+                if (movie != null) {
+                    movieList.add(movie);
+                    System.out.println("Added movie with ID " + id);
+                } else {
+                    System.out.println("Movie with ID " + id + " not found.");
+                }
+            }
+
+            character.setMovies(movieList);
+            characterRepository.save(character);
+            System.out.println("Movies updated for character with ID " + characterId);
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
         }
-        character.setMovies(movieList);
-        characterRepository.save(character);
     }
 }

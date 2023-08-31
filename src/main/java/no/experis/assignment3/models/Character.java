@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,11 +25,16 @@ public class Character {
     @Column(nullable = false)
     private String gender;
 
-    @Column(nullable = false)
+    @Column
     private String photo;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "characters")
-    private Set<Movie> movies;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "movie_character",
+            joinColumns = @JoinColumn(name = "character_id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_id")
+    )
+    private Set<Movie> movies = new HashSet<>();
 
     @Override
     public String toString() {
