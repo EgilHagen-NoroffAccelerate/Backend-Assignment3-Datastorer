@@ -52,7 +52,17 @@ public class CharacterServiceImpl implements CharacterService {
     @Override
     @Transactional
     public void deleteById(Integer id) {
-        characterRepository.deleteById(id);
+        if (characterRepository.existsById(id)) {
+            Character character = characterRepository.findById(id).get();
+
+            for (Movie movie : character.getMovies()) {
+                movie.getCharacters().remove(character);
+            }
+
+            character.getMovies().clear();
+
+            characterRepository.delete(character);
+        }
     }
 
     @Override
@@ -65,10 +75,7 @@ public class CharacterServiceImpl implements CharacterService {
         Character character = characterRepository.findById(characterId)
                 .orElseThrow(() -> new CharacterNotFoundException(characterId));
 
-        Set<Movie> movies = character.getMovies();
-        logger.info("Movies for character ID {}: {}", characterId, movies);
-
-        return movies;
+        return character.getMovies();
     }
 
     @Override

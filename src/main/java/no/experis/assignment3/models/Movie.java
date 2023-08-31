@@ -38,4 +38,17 @@ public class Movie {
             inverseJoinColumns = {@JoinColumn(name = "character_id")}
     )
     private Set<Character> characters;
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", genre='" + genre + '\'' +
+                ", releaseYear=" + releaseYear +
+                ", director='" + director + '\'' +
+                ", poster='" + poster + '\'' +
+                ", trailer='" + trailer + '\'' +
+                '}';
+    }
 }
