@@ -24,13 +24,15 @@ public class AppRunner implements ApplicationRunner {
         newChar.setGender("female");
         newChar.setId(0);
         // characterService.getMovies(1).forEach(System.out::println);
-        //characterService.findAll().forEach(System.out::println);
-        // characterService.updateMovie(1, new int[]{6, 3, 1});
-        // characterService.getMovies(1).forEach(System.out::println);
+        characterService.findAll().forEach(System.out::println);
+        int[] movieIds = new int[]{6, 3, 1};
+
+        characterService.updateMovie(1, movieIds);
+        characterService.getMovies(1).forEach(System.out::println);
         //characterService.deleteById(1);
         System.out.println(characterService.findById(1));
-        characterService.deleteById(1);
-        characterService.add(newChar);
-        System.out.println(characterService.findCharacterByName("new character"));
+        //characterService.deleteById(1);
+        //characterService.add(newChar);
+        //System.out.println(characterService.findCharacterByName("new character"));
     }
 }

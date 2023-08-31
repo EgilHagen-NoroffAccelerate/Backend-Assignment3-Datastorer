@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -37,7 +38,7 @@ public class Movie {
             joinColumns = {@JoinColumn(name = "movie_id")},
             inverseJoinColumns = {@JoinColumn(name = "character_id")}
     )
-    private Set<Character> characters;
+    private Set<Character> characters = new HashSet<>();
 
     @Override
     public String toString() {
