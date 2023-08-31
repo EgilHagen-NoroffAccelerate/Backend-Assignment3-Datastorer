@@ -18,21 +18,22 @@ public class AppRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
+        characterService.findAll().forEach(System.out::println);
+
         Character newChar = new Character();
         newChar.setName("new character");
         newChar.setAlias("brusjan ny karakter da");
         newChar.setGender("female");
-        newChar.setId(0);
+        characterService.add(newChar);
+        System.out.println(characterService.findCharacterByName("new character"));
         // characterService.getMovies(1).forEach(System.out::println);
-        characterService.findAll().forEach(System.out::println);
-        int[] movieIds = new int[]{3, 1, 6};
 
+        int[] movieIds = new int[]{3, 1, 6};
         characterService.updateMovie(1, movieIds);
         characterService.getMovies(1).forEach(System.out::println);
-        //characterService.deleteById(1);
         System.out.println(characterService.findById(1));
         //characterService.deleteById(1);
-        //characterService.add(newChar);
-        //System.out.println(characterService.findCharacterByName("new character"));
+
+
     }
 }

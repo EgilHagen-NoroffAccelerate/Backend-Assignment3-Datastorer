@@ -13,7 +13,7 @@ import java.util.Set;
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "movie_id", nullable = false)
+    @Column(name = "movie_id")
     private int id;
     @Column(nullable = false)
     private String title;
