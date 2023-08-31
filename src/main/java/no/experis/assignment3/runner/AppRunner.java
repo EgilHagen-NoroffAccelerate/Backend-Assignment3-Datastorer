@@ -17,7 +17,7 @@ public class AppRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         characterService.getMovies(3);
-        System.out.println(characterService.findAll());
+        characterService.findAll().forEach(System.out::println);
 
     }
 }

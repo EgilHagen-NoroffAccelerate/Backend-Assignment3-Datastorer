@@ -30,4 +30,14 @@ public class Character {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "characters")
     private Set<Movie> movies;
 
+    @Override
+    public String toString() {
+        return "Character{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", alias='" + alias + '\'' +
+                ", gender='" + gender + '\'' +
+                ", photo='" + photo + '\'' +
+                '}';
+    }
 }

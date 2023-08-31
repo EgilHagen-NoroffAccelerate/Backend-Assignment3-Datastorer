@@ -20,4 +20,13 @@ public class Franchise {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "franchise")
     private Set<Movie> movies;
+
+    @Override
+    public String toString() {
+        return "Franchise{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", movies=" + movies +
+                '}';
+    }
 }
