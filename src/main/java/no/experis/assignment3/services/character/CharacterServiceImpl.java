@@ -2,6 +2,7 @@ package no.experis.assignment3.services.character;
 
 import jakarta.transaction.Transactional;
 import no.experis.assignment3.exceptions.CharacterNotFoundException;
+import no.experis.assignment3.exceptions.MovieNotFoundException;
 import no.experis.assignment3.models.Character;
 import no.experis.assignment3.models.Movie;
 import no.experis.assignment3.repositories.CharacterRepository;
@@ -81,26 +82,20 @@ public class CharacterServiceImpl implements CharacterService {
     @Transactional
     public void updateMovie(int characterId, int[] movies) {
         try {
-            Character character = characterRepository.findById(characterId).orElse(null);
-            if (character == null) {
-                System.out.println("Character not found.");
-                return;
-            }
+            Character character = characterRepository.findById(characterId)
+                    .orElseThrow(() -> new CharacterNotFoundException(characterId));
 
             Set<Movie> movieList = new HashSet<>();
             for (int id : movies) {
-                Movie movie = movieRepository.findById(id).orElse(null);
+                Movie movie = movieRepository.findById(id)
+                        .orElseThrow(() -> new MovieNotFoundException(id));
                 if (movie != null) {
                     movieList.add(movie);
-                    System.out.println("Added movie with ID " + id);
-                } else {
-                    System.out.println("Movie with ID " + id + " not found.");
                 }
             }
 
             character.setMovies(movieList);
             characterRepository.save(character);
-            System.out.println("Movies updated for character with ID " + characterId);
         } catch (Exception e) {
             System.out.println("An error occurred: " + e.getMessage());
         }

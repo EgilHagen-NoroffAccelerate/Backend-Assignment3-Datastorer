@@ -25,7 +25,7 @@ public class AppRunner implements ApplicationRunner {
         newChar.setId(0);
         // characterService.getMovies(1).forEach(System.out::println);
         characterService.findAll().forEach(System.out::println);
-        int[] movieIds = new int[]{6, 3, 1};
+        int[] movieIds = new int[]{3, 1, 6};
 
         characterService.updateMovie(1, movieIds);
         characterService.getMovies(1).forEach(System.out::println);
