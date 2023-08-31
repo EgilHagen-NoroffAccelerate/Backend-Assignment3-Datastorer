@@ -34,6 +34,17 @@ public class AppRunner implements ApplicationRunner {
         System.out.println(characterService.findById(1));
         //characterService.deleteById(1);
 
+        //TODO
+        //Check if franchiseservice and movieservice is functional with delete and add and update.
+        //update mappers
+        //add movielistDTO and characterlistDTO
+        //add moviecontroller and franchisecontroller with update, delete, add and find all
+        //running application -  http://localhost:8080/api/characters - shows output of two characters infinitely.
+        //try to find a way to display all the characters just once, and if set http://localhost:8080/api/characters/(id),
+        //should display the right character to the id given.
+        //documentation using Swagger
+        //Set deletecharacter on the post api to null
+        //
 
     }
 }
