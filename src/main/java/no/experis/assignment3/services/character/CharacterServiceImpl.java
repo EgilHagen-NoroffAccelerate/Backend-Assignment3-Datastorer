@@ -38,7 +38,6 @@ public class CharacterServiceImpl implements CharacterService {
         return characterRepository.findAll();
     }
 
-
     @Override
     public Character add(Character entity) {
         return characterRepository.save(entity);

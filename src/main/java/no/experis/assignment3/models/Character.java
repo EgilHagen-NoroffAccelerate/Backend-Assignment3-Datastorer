@@ -24,7 +24,7 @@ public class Character {
     @Column(nullable = false)
     private String gender;
 
-    @Column(nullable = false)
+    @Column
     private String photo;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "characters")
