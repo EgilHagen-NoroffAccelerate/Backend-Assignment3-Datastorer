@@ -3,8 +3,6 @@ package no.experis.assignment3.models.dto.movie;
 
 import lombok.Getter;
 import lombok.Setter;
-import no.experis.assignment3.models.dto.character.CharacterDTO;
-import no.experis.assignment3.models.dto.franchise.FranchiseDTO;
 
 import java.util.Set;
 
@@ -18,6 +16,6 @@ public class MovieDTO {
     private String director;
     private String poster;
     private String trailer;
-    private FranchiseDTO franchise;
-    private Set<CharacterDTO> characters;
+    private Set<Integer> characters;
+    private int franchise;
 }

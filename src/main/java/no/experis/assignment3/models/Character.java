@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -13,28 +12,18 @@ import java.util.Set;
 public class Character {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "character_id")
     private int id;
-
-    @Column(nullable = false)
+    @Column(length = 50, nullable = false)
     private String name;
-
-    @Column(nullable = false)
+    @Column(length = 50)
     private String alias;
-
-    @Column(nullable = false)
+    @Column(length = 10)
     private String gender;
-
-    @Column
+    @Column(length = 100)
     private String photo;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "movie_character",
-            joinColumns = @JoinColumn(name = "character_id"),
-            inverseJoinColumns = @JoinColumn(name = "movie_id")
-    )
-    private Set<Movie> movies = new HashSet<>();
+    
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "characters")
+    private Set<Movie> movies;
 
     @Override
     public String toString() {
