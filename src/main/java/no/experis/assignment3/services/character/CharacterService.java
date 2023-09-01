@@ -12,4 +12,8 @@ public interface CharacterService extends CRUDService<Character, Integer> {
     Collection<Movie> getMovies(int characterId);
 
     void updateMovie(int characterId, int[] movies);
+
+    Collection<Character> findAllCharactersInAMovie(int id);
+
+    Collection<Character> findAllCharactersInAFranchise(int id);
 }

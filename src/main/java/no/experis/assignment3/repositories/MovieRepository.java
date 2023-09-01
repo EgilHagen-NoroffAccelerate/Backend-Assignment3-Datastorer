@@ -16,4 +16,8 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     Optional<List<Movie>> findByTitle(String title);
 
     Collection<Movie> findByFranchise(Franchise franchise);
+
+    @Query(value = "SELECT * FROM Movie WHERE Movie.franchise_id = ?1", nativeQuery = true)
+    Collection<Movie> findMoviesByFranchiseId(int id);
+
 }

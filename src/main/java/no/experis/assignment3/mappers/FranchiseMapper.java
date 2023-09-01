@@ -1,8 +1,8 @@
 package no.experis.assignment3.mappers;
 
-import no.experis.assignment3.models.Character;
+import no.experis.assignment3.models.Franchise;
 import no.experis.assignment3.models.Movie;
-import no.experis.assignment3.models.dto.character.CharacterDTO;
+import no.experis.assignment3.models.dto.franchise.FranchiseDTO;
 import no.experis.assignment3.services.movie.MovieService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,20 +14,17 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
-public abstract class CharacterMapper {
-
+public abstract class FranchiseMapper {
     @Autowired
     protected MovieService movieService;
 
     @Mapping(target = "movies", source = "movies", qualifiedByName = "moviesToIds")
-    public abstract CharacterDTO characterToCharacterDTO(Character character);
+    public abstract FranchiseDTO franchiseToFranchiseDTO(Franchise franchise);
 
-    public abstract Collection<CharacterDTO> characterToCharacterDTO(Collection<Character> characters);
+    public abstract Collection<FranchiseDTO> franchiseToFranchiseDTO(Collection<Franchise> franchises);
 
-
-    // Mapping the other way
     @Mapping(target = "movies", source = "movies", qualifiedByName = "movieIdsToMovies")
-    public abstract Character characterDTOToCharacter(CharacterDTO characterDTO);
+    public abstract Franchise franchiseDTOToFranchise(FranchiseDTO dto);
 
     @Named("moviesToIds")
     Set<Integer> mapMoviesToIds(Set<Movie> source) {
@@ -43,5 +40,4 @@ public abstract class CharacterMapper {
                 .map(i -> movieService.findById(i))
                 .collect(Collectors.toSet());
     }
-
 }

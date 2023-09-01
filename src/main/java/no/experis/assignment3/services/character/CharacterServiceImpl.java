@@ -100,4 +100,16 @@ public class CharacterServiceImpl implements CharacterService {
             System.out.println("An error occurred: " + e.getMessage());
         }
     }
+
+    @Override
+    public Collection<Character> findAllCharactersInAMovie(int id) {
+        return characterRepository.findAllCharactersInAMovie(id);
+    }
+
+    @Override
+    public Collection<Character> findAllCharactersInAFranchise(int id) {
+        return characterRepository.findAllCharactersInAMovie(id);
+    }
+
+
 }
