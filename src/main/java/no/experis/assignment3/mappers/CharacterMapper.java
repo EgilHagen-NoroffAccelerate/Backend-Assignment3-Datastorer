@@ -14,23 +14,31 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
-public interface CharacterMapper {
+public abstract class CharacterMapper {
 
+    @Autowired
+    protected MovieService movieService;
 
     @Mapping(target = "movies", source = "movies", qualifiedByName = "moviesToIds")
-    CharacterDTO characterToCharacterDTO(Character character);
-    Collection<CharacterDTO> characterToCharacterDTO(Collection<Character> characters);
+    public abstract CharacterDTO characterToCharacterDTO(Character character);
+    public abstract Collection<CharacterDTO> characterToCharacterDTO(Collection<Character> characters);
+
 
     @Mapping(target = "movies", source = "movies", qualifiedByName = "movieIdsToMovies")
     public abstract Character characterDtoToCharacter(CharacterDTO characterDTO);
 
-    @Named(value = "movieToMovieId")
-    default Set<Integer> map(Set<Movie> value) {
-        if (value == null)
+    @Named("moviesToIds")
+    Set<Integer> mapMoviesToIds(Set<Movie> source) {
+        if(source == null)
             return null;
-        return value.stream()
-                .map(s -> s.getId())
-                .collect(Collectors.toSet());
+        return source.stream()
+                .map(s -> s.getId()).collect(Collectors.toSet());
     }
 
+    @Named("movieIdsToMovies")
+    Set<Movie> mapIdsToMovies(Set<Integer> id) {
+        return id.stream()
+                .map( i -> movieService.findById(i))
+                .collect(Collectors.toSet());
+    }
 }

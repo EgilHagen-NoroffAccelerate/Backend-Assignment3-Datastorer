@@ -1,6 +1,7 @@
 package no.experis.assignment3.models.dto.movie;
 
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import no.experis.assignment3.models.dto.character.CharacterDTO;

@@ -36,10 +36,10 @@ public class CharacterController {
             @ApiResponse(
                     responseCode = "200",
                     description = "Success",
-                    content = {
+                    content =
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = CharacterDTO.class)))
-                    }),
+            ),
             @ApiResponse(
                     responseCode = "404",
                     description = "Not Found",
@@ -57,10 +57,10 @@ public class CharacterController {
             @ApiResponse(
                     responseCode = "200",
                     description = "Success",
-                    content = {
+                    content =
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = CharacterDTO.class))
-                    }),
+            ),
             @ApiResponse(
                     responseCode = "404",
                     description = "Not Found",
@@ -78,13 +78,19 @@ public class CharacterController {
             @ApiResponse(
                     responseCode = "201",
                     description = "Created",
-                    content = @Content
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CharacterDTO.class))
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Not Found",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProblemDetail.class))
             )
     })
-    public ResponseEntity add(@RequestBody CharacterDTO entity) throws URISyntaxException {
-        // Add
-        //StudentService.add(entity);
-        URI uri = new URI("api/characters" + 1);
+    public ResponseEntity add(@RequestBody Character entity) throws URISyntaxException {
+        Character character = characterService.add(entity);
+        URI uri = URI.create("api/characters" + character.getId());
         return ResponseEntity.created(uri).build();
     }
 
@@ -101,15 +107,14 @@ public class CharacterController {
                     description = "Not found",
                     content = @Content)
     })
-    /*
     public ResponseEntity update(@RequestBody CharacterDTO characterDTO, @PathVariable int id){
         if(id != characterDTO.getId())
             return ResponseEntity.badRequest().build();
-        characterService.update(characterDTO);
+        characterService.update(characterMapper.characterDtoToCharacter(characterDTO));
         return ResponseEntity.noContent().build();
     }
 
-     */
+
 
     @Operation(summary = "Get characters in a movie")
     @ApiResponses(value = {
@@ -128,11 +133,32 @@ public class CharacterController {
         return ResponseEntity.ok(characterService.findAllCharactersInMovie(id));
     }
 
+    @Operation(summary = "Get characters in a franchise")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Success",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CharacterDTO.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "Not found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProblemDetail.class))
+                    })
+    })
+    @GetMapping("{id}/movies")
+    public ResponseEntity<Collection<Character>> findAllCharactersInFranchise(@PathVariable int id) {
+        return ResponseEntity.ok(characterService.findAllCharactersInFranchise(id));
+    }
+
+
+    /*
     @PutMapping("{id}/movies")
     public ResponseEntity updateMovies(@PathVariable int id, @RequestBody int[] movieIds) {
         characterService.updateMovie(id, movieIds);
         return ResponseEntity.noContent().build();
-    }
+    } */
+
+
 }
 
 

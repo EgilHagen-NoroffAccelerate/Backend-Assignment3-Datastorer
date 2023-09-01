@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import no.experis.assignment3.mappers.FranchiseMapper;
 import no.experis.assignment3.models.Franchise;
 import no.experis.assignment3.models.dto.franchise.FranchiseDTO;
+import no.experis.assignment3.models.dto.movie.MovieDTO;
 import no.experis.assignment3.services.franchise.FranchiseService;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class FranchiseController {
     }
 
     @GetMapping
-    @Operation(summary = "Gets all the franchises")
+    @Operation(summary = "Gets all franchises")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -66,7 +67,7 @@ public class FranchiseController {
             )
     })
     public ResponseEntity findById(@PathVariable int id) {
-        return ResponseEntity.ok(franchiseService.findById(id));
+        return ResponseEntity.ok(franchiseMapper.franchiseToFranchiseDTO(franchiseService.findById(id)));
     }
 
     @PostMapping
@@ -75,13 +76,17 @@ public class FranchiseController {
             @ApiResponse(
                     responseCode = "201",
                     description = "Created",
-                    content = @Content
-            )
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MovieDTO.class))
+            ),
+            @ApiResponse(responseCode = "500",
+                    description = "Internal server error",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProblemDetail.class)) })
     })
-    public ResponseEntity add(@RequestBody Franchise franchise) throws URISyntaxException {
-        // Add
-        //StudentService.add(entity);
-        URI uri = new URI("api/franchises/" + 1);
+    public ResponseEntity add(@RequestBody Franchise entity) throws URISyntaxException {
+        Franchise franchise = franchiseService.add(entity);
+        URI uri = URI.create("api/franchises/" + franchise.getId());
         return ResponseEntity.created(uri).build();
     }
 
@@ -89,20 +94,19 @@ public class FranchiseController {
     @Operation(summary = "Updates a franchise")
     @ApiResponses( value = {
             @ApiResponse(responseCode = "204",
-                    description = "Student successfully updated",
+                    description = "Success",
                     content = @Content),
             @ApiResponse(responseCode = "400",
                     description = "Malformed request",
                     content = @Content),
             @ApiResponse(responseCode = "404",
-                    description = "Student not found with supplied ID",
+                    description = "Not found",
                     content = @Content)
     })
-    public ResponseEntity update(@RequestBody Franchise franchise, @PathVariable int id){
-        if(id != franchise.getId())
+    public ResponseEntity update(@RequestBody FranchiseDTO franchiseDTO, @PathVariable int id) {
+        if (id != franchiseDTO.getId())
             return ResponseEntity.badRequest().build();
-        franchiseService.update(franchise);
+        franchiseService.update(franchiseMapper.franchiseDtoToFranchise(franchiseDTO));
         return ResponseEntity.noContent().build();
     }
-
 }

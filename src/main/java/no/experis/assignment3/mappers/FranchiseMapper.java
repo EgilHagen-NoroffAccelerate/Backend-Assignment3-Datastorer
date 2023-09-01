@@ -15,19 +15,30 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
-public interface FranchiseMapper {
-
+public abstract class FranchiseMapper {
+    @Autowired
+    protected MovieService movieService;
 
     @Mapping(target = "movies", source = "movies", qualifiedByName = "moviesToIds")
-    FranchiseDTO franchiseToFranchiseDTO(Franchise franchise);
-    Collection<FranchiseDTO> franchiseToFranchiseDTO(Collection<Franchise> franchises);
+    public abstract FranchiseDTO franchiseToFranchiseDTO(Franchise franchise);
 
-    @Named(value = "movieToMovieId")
-        default Set<Integer> map(Set<Movie> value) {
-        if (value == null)
+    public abstract Collection<FranchiseDTO> franchiseToFranchiseDTO(Collection<Franchise> franchises);
+
+    @Mapping(target = "movies", source = "movies", qualifiedByName = "movieIdsToMovies")
+    public abstract Franchise franchiseDtoToFranchise(FranchiseDTO dto);
+
+    @Named("moviesToIds")
+    Set<Integer> mapMoviesToIds(Set<Movie> value) {
+        if(value == null)
             return null;
         return value.stream()
-                .map(s -> s.getId())
+                .map(s -> s.getId()).collect(Collectors.toSet());
+    }
+
+    @Named("movieIdsToMovies")
+    Set<Movie> map(Set<Integer> id) {
+        return id.stream()
+                .map( i -> movieService.findById(i))
                 .collect(Collectors.toSet());
     }
 }

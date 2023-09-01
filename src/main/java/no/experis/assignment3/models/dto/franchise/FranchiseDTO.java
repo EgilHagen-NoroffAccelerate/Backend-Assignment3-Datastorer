@@ -1,5 +1,6 @@
 package no.experis.assignment3.models.dto.franchise;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import no.experis.assignment3.models.dto.movie.MovieDTO;

@@ -78,10 +78,9 @@ public class MovieController {
                     content = @Content
             )
     })
-    public ResponseEntity add(@RequestBody MovieDTO entity) throws URISyntaxException {
-        // Add
-        //StudentService.add(entity);
-        URI uri = new URI("api/movies/" + 1);
+    public ResponseEntity add(@RequestBody Movie entity) throws URISyntaxException {
+        Movie movie = movieService.add(entity);
+        URI uri = URI.create("api/movies/" + movie.getId());
         return ResponseEntity.created(uri).build();
     }
 
@@ -98,12 +97,14 @@ public class MovieController {
                     description = "Student not found with supplied ID",
                     content = @Content)
     })
-    public ResponseEntity update(@RequestBody Movie movie, @PathVariable int id){
-        if(id != movie.getId())
+    public ResponseEntity update(@RequestBody MovieDTO movieDTO, @PathVariable int id){
+        if (id != movieDTO.getId())
             return ResponseEntity.badRequest().build();
-        movieService.update(movie);
+        movieService.update(movieMapper.movieDTOToMovie(movieDTO)
+        );
         return ResponseEntity.noContent().build();
     }
-
 }
+
+
 
