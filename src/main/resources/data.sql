@@ -20,7 +20,7 @@ VALUES ('1', '1', '1996', 'Egil Hagen', 'Horror', 'www.linkedin.com', 'Egil på 
 INSERT INTO character (character_id, alias, gender, name, photo)
 VALUES ('1', 'Pegil Plagen', 'Male', 'Egil Hagen', 'linkedin.com'),
        ('2', 'Loc the sock', 'Female', 'Lucas Tran', 'linkedin.com'),
-       ('3', 'Tage in a cage', 'Male', 'Egil Hagen', 'linkedin.com'),
+       ('3', 'Tage in a cage', 'Male', 'Tage Munthe', 'linkedin.com'),
        ('4', 'Character X', 'Male', 'Creator 1', 'linkedin.com'),
        ('5', 'Character Y', 'Female', 'Creator 2', 'linkedin.com'),
        ('6', 'Character Z', 'Male', 'Creator 3', 'linkedin.com');

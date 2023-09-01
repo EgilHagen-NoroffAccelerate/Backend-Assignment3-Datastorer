@@ -11,9 +11,5 @@ import java.util.Collection;
 
 public interface FranchiseService extends CRUDService<Franchise, Integer> {
 
-    Collection<Franchise> findFranchiseByName(String name);
-
-    Collection<Movie> getMoviesInFranchise(int franchiseID);
-
 
 }

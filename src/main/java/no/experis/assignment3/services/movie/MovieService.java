@@ -9,8 +9,13 @@ import java.util.List;
 
 public interface MovieService extends CRUDService<Movie, Integer> {
 
-    Collection<Movie> findMoviesByFranchise(Franchise franchise);
+    Collection<Movie> findAllMoviesInFranchise(int id);
 
     void addMoviesToFranchise(Franchise franchise, List<Movie> movies);
+
+    //void nullAllMoviesWithCertainFranchiseId(int id);
+    //void setFranchiseIdToSpecifiedMovieIds(int fra_id, int movie_id);
+
+    Movie updateCharactersInMovie(List<Integer> idList, int id);
 
 }

@@ -46,19 +46,17 @@ public class FranchiseServiceImpl implements FranchiseService {
 
     @Override
     public void deleteById(Integer id) {
-        franchiseRepository.deleteById(id);
+        if (franchiseRepository.existsById(id)) {
+            Franchise entity = franchiseRepository.findById(id).get();
+
+            for (Movie movie : entity.getMovies()) {
+                movie.getCharacters().remove(entity);
+            }
+
+            entity.getMovies().clear();
+
+            franchiseRepository.delete(entity);
+        }
     }
 
-    @Override
-    public Collection<Franchise> findFranchiseByName(String name) {
-        return franchiseRepository.findAllByName(name);
-    }
-
-    @Override
-    public Collection<Movie> getMoviesInFranchise(int franchiseId) {
-        Franchise franchise = franchiseRepository.findById(franchiseId)
-                .orElseThrow(() -> new CharacterNotFoundException(franchiseId));
-
-        return franchise.getMovies();
-    }
 }

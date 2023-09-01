@@ -13,7 +13,6 @@ import java.util.List;
 
 @Service
 public class MovieServiceImpl implements MovieService {
-
     private final Logger logger = LoggerFactory.getLogger(MovieServiceImpl.class);
     private final MovieRepository movieRepository;
 
@@ -46,11 +45,12 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public void deleteById(Integer id) {
         movieRepository.deleteById(id);
+
     }
 
     @Override
-    public Collection<Movie> findMoviesByFranchise(Franchise franchise) {
-        return movieRepository.findByFranchise(franchise);
+    public Collection<Movie> findAllMoviesInFranchise(int id) {
+        return movieRepository.findAllMoviesInFranchise(id);
     }
 
     @Override
@@ -59,6 +59,22 @@ public class MovieServiceImpl implements MovieService {
             movie.setFranchise(franchise);
             movieRepository.save(movie);
         }
+    }
+
+    /*
+    @Override
+    public void nullAllMoviesWithCertainFranchiseId(int id) {
+
+    }
+    @Override
+    public void setFranchiseIdToSpecifiedMovieIds(int fra_id, int movie_id) {
+
+    }
+    */
+
+    @Override
+    public Movie updateCharactersInMovie(List<Integer> idList, int id) {
+        return null;
     }
 }
 

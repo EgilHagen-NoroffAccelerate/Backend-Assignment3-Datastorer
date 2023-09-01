@@ -10,7 +10,4 @@ import java.util.Collection;
 
 public interface FranchiseRepository extends JpaRepository<Franchise, Integer> {
 
-    @Query(value = "SELECT * FROM character WHERE name LIKE %?%",
-            nativeQuery = true)
-    Collection<Franchise> findAllByName(String name);
 }

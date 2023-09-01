@@ -40,8 +40,8 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     @Override
-    public Character add(Character entity) {
-        return characterRepository.save(entity);
+    public Character add(Character character) {
+        return characterRepository.save(character);
     }
 
     @Override
@@ -99,5 +99,15 @@ public class CharacterServiceImpl implements CharacterService {
         } catch (Exception e) {
             System.out.println("An error occurred: " + e.getMessage());
         }
+    }
+
+    @Override
+    public Collection<Character> findAllCharactersInMovie(int id) {
+        return characterRepository.findAllCharactersInMovie(id);
+    }
+
+    @Override
+    public Collection<Character> findAllCharactersInFranchise(int id) {
+        return characterRepository.findAllCharactersInMovie(id);
     }
 }

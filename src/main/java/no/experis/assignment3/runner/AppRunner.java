@@ -26,13 +26,15 @@ public class AppRunner implements ApplicationRunner {
         newChar.setGender("female");
         //characterService.add(newChar);
         System.out.println(characterService.findCharacterByName("new character"));
-        // characterService.getMovies(1).forEach(System.out::println);
+        //characterService.getMovies(1).forEach(System.out::println);
 
         int[] movieIds = new int[]{3, 1, 6};
         characterService.updateMovie(1, movieIds);
         characterService.getMovies(1).forEach(System.out::println);
         System.out.println(characterService.findById(1));
         //characterService.deleteById(1);
+
+
 
         //TODO
         //Check if franchiseservice and movieservice is functional with delete and add and update.

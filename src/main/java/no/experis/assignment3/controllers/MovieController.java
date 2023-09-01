@@ -19,7 +19,7 @@ import java.net.URISyntaxException;
 
 
 @RestController
-@RequestMapping(path = "api/movies")
+@RequestMapping("api/movies")
 public class MovieController {
 
     private final MovieService movieService;
@@ -30,9 +30,8 @@ public class MovieController {
         this.movieMapper = movieMapper;
     }
 
-
     @GetMapping
-    @Operation(summary = "Gets all the movies")
+    @Operation(summary = "Gets all movies")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",

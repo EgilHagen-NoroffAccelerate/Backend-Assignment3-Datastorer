@@ -16,9 +16,8 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface MovieMapper {
 
-    @Mapping(target = "franchise", source = "franchise")
+    @Mapping(target = "characters", source = "characters")
     MovieDTO movieToMovieDTO(Movie movie);
-    //Movie movieDTOToMovie(MovieDTO movieDTO);
     Collection<MovieDTO> movieToMovieDTO(Collection<Movie> movies);
 
     @Named(value = "franchiseToFranchiseId")
