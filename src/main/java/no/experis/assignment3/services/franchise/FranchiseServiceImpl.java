@@ -1,7 +1,10 @@
 package no.experis.assignment3.services.franchise;
 
+import no.experis.assignment3.exceptions.CharacterNotFoundException;
 import no.experis.assignment3.exceptions.FranchiseNotFoundException;
+import no.experis.assignment3.models.Character;
 import no.experis.assignment3.models.Franchise;
+import no.experis.assignment3.models.Movie;
 import no.experis.assignment3.repositories.FranchiseRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,5 +47,18 @@ public class FranchiseServiceImpl implements FranchiseService {
     @Override
     public void deleteById(Integer id) {
         franchiseRepository.deleteById(id);
+    }
+
+    @Override
+    public Collection<Franchise> findFranchiseByName(String name) {
+        return franchiseRepository.findAllByName(name);
+    }
+
+    @Override
+    public Collection<Movie> getMoviesInFranchise(int franchiseId) {
+        Franchise franchise = franchiseRepository.findById(franchiseId)
+                .orElseThrow(() -> new CharacterNotFoundException(franchiseId));
+
+        return franchise.getMovies();
     }
 }

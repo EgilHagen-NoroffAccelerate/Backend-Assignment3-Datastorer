@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import no.experis.assignment3.mappers.CharacterMapper;
+import no.experis.assignment3.models.Character;
 import no.experis.assignment3.models.dto.character.CharacterDTO;
 import no.experis.assignment3.services.character.CharacterService;
 import org.springframework.http.ProblemDetail;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collection;
 
 //@Autowired
 @RestController
@@ -27,9 +29,6 @@ public class CharacterController {
         this.characterService = characterService;
         this.characterMapper = characterMapper;
     }
-
-    // Other CRUD operations and related endpoints
-
 
     @GetMapping
     @Operation(summary = "Gets all the characters")
@@ -44,11 +43,7 @@ public class CharacterController {
             )
     })
     public ResponseEntity findAll() {
-        return ResponseEntity.ok(
-                characterMapper.MovieCharacterUpdateDTO(
-                        characterService.findAll()
-                )
-        );
+        return ResponseEntity.ok(characterMapper.characterToCharacterDTO(characterService.findAll()));
     }
 
     @GetMapping("{id}")
@@ -84,10 +79,43 @@ public class CharacterController {
     })
     public ResponseEntity add(@RequestBody CharacterDTO entity) throws URISyntaxException {
         // Add
-        //studentService.add(entity);
+        //StudentService.add(entity);
         URI uri = new URI("api/characters/" + 1);
         return ResponseEntity.created(uri).build();
     }
 
+    @PutMapping("{id}")
+    @Operation(summary = "Updates a character")
+    @ApiResponses( value = {
+            @ApiResponse(responseCode = "204",
+                    description = "Student successfully updated",
+                    content = @Content),
+            @ApiResponse(responseCode = "400",
+                    description = "Malformed request",
+                    content = @Content),
+            @ApiResponse(responseCode = "404",
+                    description = "Student not found with supplied ID",
+                    content = @Content)
+    })
+    public ResponseEntity update(@RequestBody Character character, @PathVariable int id){
+        if(id != character.getId())
+            return ResponseEntity.badRequest().build();
+        characterService.update(character);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("{id}/movies")
+    public ResponseEntity getMovies(@PathVariable int id) {
+        return ResponseEntity.ok(characterService.getMovies(id));
+    }
+
+    @PutMapping("{id}/movies")
+    public ResponseEntity updateMovies(@PathVariable int id, @RequestBody int[] movieIds) {
+        characterService.updateMovie(id, movieIds);
+        return ResponseEntity.noContent().build();
+    }
 }
+
+
+
 

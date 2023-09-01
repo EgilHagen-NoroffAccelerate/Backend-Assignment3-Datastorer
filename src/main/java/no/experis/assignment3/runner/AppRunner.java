@@ -24,7 +24,7 @@ public class AppRunner implements ApplicationRunner {
         newChar.setName("new character");
         newChar.setAlias("brusjan ny karakter da");
         newChar.setGender("female");
-        characterService.add(newChar);
+        //characterService.add(newChar);
         System.out.println(characterService.findCharacterByName("new character"));
         // characterService.getMovies(1).forEach(System.out::println);
 

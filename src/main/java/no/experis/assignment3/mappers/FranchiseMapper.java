@@ -1,9 +1,8 @@
 package no.experis.assignment3.mappers;
 
-import no.experis.assignment3.models.Character;
 import no.experis.assignment3.models.Franchise;
 import no.experis.assignment3.models.Movie;
-import no.experis.assignment3.models.dto.character.CharacterDTO;
+import no.experis.assignment3.models.dto.franchise.FranchiseDTO;
 import no.experis.assignment3.models.dto.movie.MovieDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,12 +13,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
-public interface MovieMapper {
+public interface FranchiseMapper {
+   // @Mapping(target = "franchise", source = "franchise")
+    FranchiseDTO franchiseToFranchiseDTO(Franchise franchise);
+    //Franchise franchiseDTOToFranchise(FranchiseDTO franchiseDTO);
 
-    @Mapping(target = "franchise", source = "franchise")
-    MovieDTO movieToMovieDTO(Movie movie);
-    //Movie movieDTOToMovie(MovieDTO movieDTO);
-    Collection<MovieDTO> movieToMovieDTO(Collection<Movie> movies);
+    Collection<FranchiseDTO> franchiseToFranchiseDTO(Collection<Franchise> franchises);
 
     @Named(value = "franchiseToFranchiseId")
     default Set<Integer> map(Set<Franchise> value) {
@@ -30,4 +29,3 @@ public interface MovieMapper {
                 .collect(Collectors.toSet());
     }
 }
-
