@@ -15,9 +15,13 @@ import java.util.stream.Collectors;
 public interface CharacterMapper {
 
     @Mapping(target = "movies", source = "movies")
-    CharacterDTO MovieCharacterUpdateDTO(Character character);
+    CharacterDTO characterToCharacterDto(Character character);
 
-    Collection<CharacterDTO> MovieCharacterUpdateDTO(Collection<Character> characters);
+    Collection<CharacterDTO> characterToCharacterDto(Collection<Character> characters);
+
+
+    @Mapping(target = "movies", source = "movies")
+    Character characterDtoToCharacter(CharacterDTO characterDTO);
 
     @Named(value = "movieToMovieId")
     default Set<Integer> map(Set<Movie> value) {

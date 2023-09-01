@@ -45,7 +45,7 @@ public class CharacterController {
     })
     public ResponseEntity findAll() {
         return ResponseEntity.ok(
-                characterMapper.MovieCharacterUpdateDTO(
+                characterMapper.characterToCharacterDto(
                         characterService.findAll()
                 )
         );

@@ -100,4 +100,5 @@ public class CharacterServiceImpl implements CharacterService {
             System.out.println("An error occurred: " + e.getMessage());
         }
     }
+    
 }
