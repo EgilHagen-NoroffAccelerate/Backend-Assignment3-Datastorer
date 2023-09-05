@@ -2,10 +2,12 @@ package no.experis.assignment3.services.character;
 
 import jakarta.transaction.Transactional;
 import no.experis.assignment3.exceptions.CharacterNotFoundException;
+import no.experis.assignment3.exceptions.FranchiseNotFoundException;
 import no.experis.assignment3.exceptions.MovieNotFoundException;
 import no.experis.assignment3.models.Character;
 import no.experis.assignment3.models.Movie;
 import no.experis.assignment3.repositories.CharacterRepository;
+import no.experis.assignment3.repositories.FranchiseRepository;
 import no.experis.assignment3.repositories.MovieRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +24,12 @@ public class CharacterServiceImpl implements CharacterService {
     private final CharacterRepository characterRepository;
     private final MovieRepository movieRepository;
 
-    public CharacterServiceImpl(CharacterRepository characterRepository, MovieRepository movieRepository) {
+    private final FranchiseRepository franchiseRepository;
+
+    public CharacterServiceImpl(CharacterRepository characterRepository, MovieRepository movieRepository, FranchiseRepository franchiseRepository) {
         this.characterRepository = characterRepository;
         this.movieRepository = movieRepository;
+        this.franchiseRepository = franchiseRepository;
     }
 
     @Override
@@ -103,11 +108,17 @@ public class CharacterServiceImpl implements CharacterService {
 
     @Override
     public Collection<Character> findAllCharactersInAMovie(int id) {
+        if (!movieRepository.existsById(id)) {
+            throw new MovieNotFoundException(id);
+        }
         return characterRepository.findAllCharactersInAMovie(id);
     }
 
     @Override
     public Collection<Character> findAllCharactersInAFranchise(int id) {
+        if (!franchiseRepository.existsById(id)) {
+            throw new FranchiseNotFoundException(id);
+        }
         return characterRepository.findAllCharactersInAMovie(id);
     }
 

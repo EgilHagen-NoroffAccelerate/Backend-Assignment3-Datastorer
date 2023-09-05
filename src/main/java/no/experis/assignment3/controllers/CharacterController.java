@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import no.experis.assignment3.exceptions.CharacterNotFoundException;
 import no.experis.assignment3.mappers.CharacterMapper;
 import no.experis.assignment3.models.Character;
 import no.experis.assignment3.models.dto.character.CharacterDTO;
@@ -187,7 +186,7 @@ public class CharacterController {
             @ApiResponse(responseCode = "404",
                     description = "Character not found with supplied ID",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = CharacterNotFoundException.class))}),
+                            schema = @Schema(implementation = ProblemDetail.class))}),
             @ApiResponse(responseCode = "500",
                     description = "Internal server error",
                     content = {@Content(mediaType = "application/json",
