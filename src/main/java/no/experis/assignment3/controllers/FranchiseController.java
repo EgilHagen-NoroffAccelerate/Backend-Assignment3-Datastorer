@@ -34,7 +34,12 @@ public class FranchiseController {
         this.franchiseMapper = franchiseMapper;
     }
 
-    @GetMapping
+    /**
+     * Retrieves a list of all franchises.
+     *
+     * @return ResponseEntity with a list of franchises in JSON format.
+     */
+    @GetMapping("{id}")
     @Operation(summary = "Gets all franchises")
     @ApiResponses(value = {
             @ApiResponse(
@@ -42,14 +47,26 @@ public class FranchiseController {
                     description = "Success",
                     content = {
                             @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = FranchiseDTO.class)))
+                                    schema = @Schema(implementation = FranchiseDTO.class))
                     }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Not Found",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProblemDetail.class))
             )
     })
     public ResponseEntity findAll() {
         return ResponseEntity.ok(franchiseMapper.franchiseToFranchiseDTO(franchiseService.findAll()));
     }
 
+    /**
+     * Retrieves a franchise by ID.
+     *
+     * @param id The ID of the franchise to retrieve.
+     * @return ResponseEntity with the franchise data in JSON format.
+     */
     @GetMapping("{id}")
     @Operation(summary = "Franchise by given ID")
     @ApiResponses(value = {
@@ -72,6 +89,13 @@ public class FranchiseController {
         return ResponseEntity.ok(franchiseMapper.franchiseToFranchiseDTO(franchiseService.findById(id)));
     }
 
+    /**
+     * Adds a new franchise to the system.
+     *
+     * @param entity The franchise to add.
+     * @return ResponseEntity with the newly created franchise data in JSON format.
+     * @throws URISyntaxException If there is an issue with the URI.
+     */
     @PostMapping
     @Operation(summary = "Adds")
     @ApiResponses(value = {
@@ -92,6 +116,13 @@ public class FranchiseController {
         return ResponseEntity.created(uri).build();
     }
 
+    /**
+     * Updates an existing franchise.
+     *
+     * @param franchiseDTO The updated franchise data.
+     * @param id           The ID of the franchise to update.
+     * @return ResponseEntity indicating the success of the update operation.
+     */
     @PutMapping("{id}")
     @Operation(summary = "Updates a franchise")
     @ApiResponses(value = {
@@ -112,17 +143,23 @@ public class FranchiseController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Deletes a franchise by its ID.
+     *
+     * @param id The ID of the franchise to delete.
+     * @return ResponseEntity indicating the success of the delete operation.
+     */
     @Operation(summary = "Delete a Franchise")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204",
-                    description = "Franchise successfully deleted",
+                    description = "Success",
                     content = @Content),
             @ApiResponse(responseCode = "400",
                     description = "Malformed request",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorAttributeOptions.class))}),
             @ApiResponse(responseCode = "404",
-                    description = "Franchise not found with supplied ID",
+                    description = "Not found",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = FranchiseNotFoundException.class))}),
             @ApiResponse(responseCode = "500",
@@ -137,7 +174,14 @@ public class FranchiseController {
     }
 
 
-    @Operation(summary = "Update movies in specified Franchise")
+    /**
+     * Updates the movies in a specified franchise.
+     *
+     * @param movieId The list of movie IDs to update in the franchise.
+     * @param id      The ID of the franchise to update.
+     * @return ResponseEntity indicating the success of the update operation.
+     */
+    @Operation(summary = "Update movies in Franchise")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Success",

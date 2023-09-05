@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import no.experis.assignment3.exceptions.MovieNotFoundException;
 import no.experis.assignment3.mappers.MovieMapper;
 import no.experis.assignment3.models.Movie;
+import no.experis.assignment3.models.dto.character.CharacterDTO;
 import no.experis.assignment3.models.dto.movie.MovieDTO;
 import no.experis.assignment3.services.movie.MovieService;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
@@ -34,16 +35,26 @@ public class MovieController {
         this.movieMapper = movieMapper;
     }
 
+    /**
+     * Retrieves a list of all movies.
+     *
+     * @return ResponseEntity with a list of movies in JSON format.
+     */
     @GetMapping
     @Operation(summary = "Gets all movies")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
                     description = "Success",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = MovieDTO.class)))
-                    }
+                    content =
+                    @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = CharacterDTO.class)))
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Not Found",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProblemDetail.class))
             )
     })
     public ResponseEntity findAll() {
@@ -52,7 +63,12 @@ public class MovieController {
         return ResponseEntity.ok(movies);
     }
 
-
+    /**
+     * Retrieves a movie by its ID.
+     *
+     * @param id The ID of the movie to retrieve.
+     * @return ResponseEntity with the movie data in JSON format.
+     */
     @GetMapping("{id}")
     @Operation(summary = "Movie by a given ID")
     @ApiResponses(value = {
@@ -75,13 +91,27 @@ public class MovieController {
         return ResponseEntity.ok(movieMapper.movieToMovieDTO(movieService.findById(id)));
     }
 
+    /**
+     * Adds a new movie to the system.
+     *
+     * @param entity The movie to add.
+     * @return ResponseEntity with the newly created movie data in JSON format.
+     * @throws URISyntaxException If there is an issue with the URI.
+     */
     @PostMapping
-    @Operation(summary = "Adds")
+    @Operation(summary = "Adds a movie")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "201",
                     description = "Created",
-                    content = @Content
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CharacterDTO.class))
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Not Found",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProblemDetail.class))
             )
     })
     public ResponseEntity add(@RequestBody Movie entity) throws URISyntaxException {
@@ -90,17 +120,24 @@ public class MovieController {
         return ResponseEntity.created(uri).build();
     }
 
+    /**
+     * Updates an existing movie.
+     *
+     * @param movieDTO The updated movie data.
+     * @param id       The ID of the movie to update.
+     * @return ResponseEntity indicating the success of the update operation.
+     */
     @PutMapping("{id}")
     @Operation(summary = "Updates a movie")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204",
-                    description = "Movie successfully updated",
+                    description = "Success",
                     content = @Content),
             @ApiResponse(responseCode = "400",
                     description = "Malformed request",
                     content = @Content),
             @ApiResponse(responseCode = "404",
-                    description = "Movie not found with supplied ID",
+                    description = "Not found",
                     content = @Content)
     })
     public ResponseEntity update(@RequestBody MovieDTO movieDTO, @PathVariable int id) {
@@ -112,17 +149,23 @@ public class MovieController {
     }
 
 
+    /**
+     * Deletes a movie by its ID.
+     *
+     * @param id The ID of the movie to delete.
+     * @return ResponseEntity indicating the success of the delete operation.
+     */
     @Operation(summary = "Delete a Movie")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204",
-                    description = "Movie successfully deleted",
+                    description = "Success",
                     content = @Content),
             @ApiResponse(responseCode = "400",
                     description = "Malformed request",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorAttributeOptions.class))}),
             @ApiResponse(responseCode = "404",
-                    description = "Movie not found with supplied ID",
+                    description = "Not found",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = MovieNotFoundException.class))}),
             @ApiResponse(responseCode = "500",
@@ -136,6 +179,13 @@ public class MovieController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Updates the characters in a specified movie.
+     *
+     * @param characterId The list of character IDs to update in the movie.
+     * @param id          The ID of the movie to update.
+     * @return ResponseEntity indicating the success of the update operation.
+     */
     @Operation(summary = "Update characters in specified movie")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",

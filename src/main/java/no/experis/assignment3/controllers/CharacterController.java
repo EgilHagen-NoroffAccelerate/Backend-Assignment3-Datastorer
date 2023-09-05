@@ -19,7 +19,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
 
-//@Autowired
+
 @RestController
 @RequestMapping("/api/characters")
 public class CharacterController {
@@ -31,8 +31,13 @@ public class CharacterController {
         this.characterMapper = characterMapper;
     }
 
+    /**
+     * Retrieves a list of all characters.
+     *
+     * @return ResponseEntity with a list of characters in JSON format.
+     */
     @GetMapping
-    @Operation(summary = "Gets all the characters")
+    @Operation(summary = "Gets all characters")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -52,6 +57,12 @@ public class CharacterController {
         return ResponseEntity.ok(characterMapper.characterToCharacterDTO(characterService.findAll()));
     }
 
+    /**
+     * Retrieves a character by their ID.
+     *
+     * @param id The ID of the character to retrieve.
+     * @return ResponseEntity with the character data in JSON format.
+     */
     @GetMapping("{id}")
     @Operation(summary = "Gets a character by their ID")
     @ApiResponses(value = {
@@ -73,6 +84,13 @@ public class CharacterController {
         return ResponseEntity.ok(characterMapper.characterToCharacterDTO(characterService.findById(id)));
     }
 
+    /**
+     * Adds a new character to the system.
+     *
+     * @param entity The character to add.
+     * @return ResponseEntity with the newly created character data in JSON format.
+     * @throws URISyntaxException If there is an issue with the URI.
+     */
     @PostMapping
     @Operation(summary = "Adds a character")
     @ApiResponses(value = {
@@ -95,6 +113,13 @@ public class CharacterController {
         return ResponseEntity.created(uri).build();
     }
 
+    /**
+     * Updates an existing character.
+     *
+     * @param characterDTO The updated character data.
+     * @param id           The ID of the character to update.
+     * @return ResponseEntity indicating the success of the update operation.
+     */
     @PutMapping("{id}")
     @Operation(summary = "Updates a character")
     @ApiResponses(value = {
@@ -115,30 +140,20 @@ public class CharacterController {
         return ResponseEntity.noContent().build();
     }
 
-
-   /* @Operation(summary = "Get characters in a movie")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "Success",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = CharacterDTO.class))}),
-            @ApiResponse(responseCode = "404",
-                    description = "Not found",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ProblemDetail.class))
-                    })
-    })
-    @GetMapping("movie/{id}")
-    public ResponseEntity<Collection<Character>> findAllCharactersInAMovie(@PathVariable int id) {
-        return ResponseEntity.ok(characterService.findAllCharactersInAMovie(id));
-    }*/
-
+    /**
+     * Retrieves characters in a specific movie.
+     *
+     * @param id The ID of the movie.
+     * @return ResponseEntity with a list of characters in the movie in JSON format.
+     */
     @Operation(summary = "Get characters in a movie")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Success",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = CharacterDTO.class))}),
+                            schema = @Schema(implementation = CharacterDTO.class))
+                    }
+            ),
             @ApiResponse(responseCode = "404",
                     description = "Characters do not exist with supplied movie ID",
                     content = {@Content(mediaType = "application/json",
@@ -149,12 +164,21 @@ public class CharacterController {
         return ResponseEntity.ok(characterService.findAllCharactersInAMovie(id));
     }
 
+
+    /**
+     * Retrieves characters in a specific franchise.
+     *
+     * @param id The ID of the franchise.
+     * @return ResponseEntity with a list of characters in the franchise in JSON format.
+     */
     @Operation(summary = "Get characters in a franchise")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Success",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = CharacterDTO.class))}),
+                            schema = @Schema(implementation = CharacterDTO.class))
+                    }
+            ),
             @ApiResponse(responseCode = "404",
                     description = "Not found",
                     content = {@Content(mediaType = "application/json",
@@ -167,13 +191,12 @@ public class CharacterController {
     }
 
 
-    /*
-    @PutMapping("{id}/movies")
-    public ResponseEntity updateMovies(@PathVariable int id, @RequestBody int[] movieIds) {
-        characterService.updateMovie(id, movieIds);
-        return ResponseEntity.noContent().build();
-    } */
-
+    /**
+     * Deletes a character by their ID.
+     *
+     * @param id The ID of the character to delete.
+     * @return ResponseEntity indicating the success of the delete operation.
+     */
     @Operation(summary = "Delete a character")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204",
@@ -198,6 +221,29 @@ public class CharacterController {
         return ResponseEntity.noContent().build();
     }
 
+    /*
+    @PutMapping("{id}/movies")
+    public ResponseEntity updateMovies(@PathVariable int id, @RequestBody int[] movieIds) {
+        characterService.updateMovie(id, movieIds);
+        return ResponseEntity.noContent().build();
+    } */
+
+      /* @Operation(summary = "Get characters in a movie")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Success",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CharacterDTO.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "Not found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProblemDetail.class))
+                    })
+    })
+    @GetMapping("movie/{id}")
+    public ResponseEntity<Collection<Character>> findAllCharactersInAMovie(@PathVariable int id) {
+        return ResponseEntity.ok(characterService.findAllCharactersInAMovie(id));
+    }*/
 }
 
 
