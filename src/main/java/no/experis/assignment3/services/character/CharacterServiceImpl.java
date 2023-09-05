@@ -121,6 +121,4 @@ public class CharacterServiceImpl implements CharacterService {
         }
         return characterRepository.findAllCharactersInAMovie(id);
     }
-
-
 }

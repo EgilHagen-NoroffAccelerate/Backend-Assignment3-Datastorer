@@ -134,7 +134,8 @@ public class CharacterController {
     public ResponseEntity update(@RequestBody CharacterDTO characterDTO, @PathVariable int id) {
         if (id != characterDTO.getId())
             return ResponseEntity.badRequest().build();
-        characterService.update(characterMapper.characterDTOToCharacter(characterDTO));
+        Character updatedChar = characterMapper.characterDTOToCharacter(characterDTO);
+        characterService.update(updatedChar);
         return ResponseEntity.noContent().build();
     }
 
