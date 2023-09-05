@@ -91,13 +91,13 @@ public class MovieController {
     @Operation(summary = "Updates a movie")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204",
-                    description = "Student successfully updated",
+                    description = "Movie successfully updated",
                     content = @Content),
             @ApiResponse(responseCode = "400",
                     description = "Malformed request",
                     content = @Content),
             @ApiResponse(responseCode = "404",
-                    description = "Student not found with supplied ID",
+                    description = "Movie not found with supplied ID",
                     content = @Content)
     })
     public ResponseEntity update(@RequestBody MovieDTO movieDTO, @PathVariable int id) {
