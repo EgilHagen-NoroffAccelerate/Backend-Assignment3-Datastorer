@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import java.util.Set;
 
+/**
+ * Character class which represents what a character contains.
+ */
 @Entity
 @Getter
 @Setter
@@ -21,7 +24,7 @@ public class Character {
     private String gender;
     @Column(length = 100)
     private String photo;
-    
+
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "characters")
     private Set<Movie> movies;
 

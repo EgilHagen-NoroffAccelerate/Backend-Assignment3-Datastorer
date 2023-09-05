@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import java.util.Set;
 
+/**
+ * DTO Class for transferring objects from movie class.
+ */
 @Getter
 @Setter
 public class MovieDTO {

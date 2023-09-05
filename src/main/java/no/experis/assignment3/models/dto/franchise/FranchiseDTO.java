@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import java.util.Set;
 
+/**
+ * DTO Class for transferring objects from franchise class.
+ */
 @Getter
 @Setter
 public class FranchiseDTO {

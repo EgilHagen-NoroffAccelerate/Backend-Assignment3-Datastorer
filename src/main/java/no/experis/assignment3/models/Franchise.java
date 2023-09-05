@@ -7,6 +7,9 @@ import lombok.Setter;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * A class which represents what a Franchise contains.
+ */
 @Entity
 @Getter
 @Setter

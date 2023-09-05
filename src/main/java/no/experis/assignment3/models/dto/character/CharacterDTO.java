@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import java.util.Set;
 
+/**
+ * DTO Class for transferring objects from character class.
+ */
 @Getter
 @Setter
 public class CharacterDTO {

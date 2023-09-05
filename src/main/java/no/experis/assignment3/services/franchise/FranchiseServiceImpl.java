@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Service implementation for managing Franchise entities.
+ */
 @Service
 public class FranchiseServiceImpl implements FranchiseService {
 

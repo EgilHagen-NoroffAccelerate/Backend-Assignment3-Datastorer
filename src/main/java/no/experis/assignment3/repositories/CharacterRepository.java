@@ -6,19 +6,35 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Collection;
 
+/**
+ * Repository interface for managing Character entities.
+ */
 public interface CharacterRepository extends JpaRepository<Character, Integer> {
 
-    @Query(value = "SELECT * FROM character WHERE name LIKE %?%",
-            nativeQuery = true)
-    Collection<Character> findAllByName(String name);
-
+    /**
+     * Retrieves a collection of characters appearing in a specific movie.
+     *
+     * @param id The ID of the movie.
+     * @return A collection of Character objects.
+     */
     @Query(value = "SELECT * FROM Character " +
             "INNER JOIN movie_character " +
             "ON movie_character.character_id = id " +
             "WHERE movie_character.movie_id= ?1", nativeQuery = true)
     Collection<Character> findAllCharactersInAMovie(int id);
 
-    @Query(value = "SELECT * FROM Character INNER JOIN movie_character ON movie_character.character_id = id INNER JOIN movie ON movie.id = movie_character.movie_id WHERE movie.franchise_id = ?1", nativeQuery = true)
+    /**
+     * Retrieves a collection of characters appearing in a specific franchise.
+     *
+     * @param id The ID of the franchise.
+     * @return A collection of Character objects.
+     */
+    @Query(value = "SELECT Character.*, movie_id, franchise_id " +
+            "FROM Character " +
+            "INNER JOIN movie_character " +
+            "ON movie_character.character_id = Character.id " +
+            "LEFT JOIN movie as m " +
+            "ON movie_character.movie_id = m.id " +
+            "WHERE m.franchise_id = ?1", nativeQuery = true)
     Collection<Character> findAllCharactersInAFranchise(int id);
-
 }

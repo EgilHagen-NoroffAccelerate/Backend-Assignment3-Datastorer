@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * A class which represents what a Movie contains.
+ */
 @Entity
 @Getter
 @Setter

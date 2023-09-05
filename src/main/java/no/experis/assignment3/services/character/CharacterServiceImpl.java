@@ -17,6 +17,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Service implementation for managing Character entities.
+ */
 @Service
 public class CharacterServiceImpl implements CharacterService {
 
@@ -71,19 +74,6 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     @Override
-    public Collection<Character> findCharacterByName(String name) {
-        return characterRepository.findAllByName(name);
-    }
-
-    @Override
-    public Collection<Movie> getMovies(int characterId) {
-        Character character = characterRepository.findById(characterId)
-                .orElseThrow(() -> new CharacterNotFoundException(characterId));
-
-        return character.getMovies();
-    }
-
-    @Override
     @Transactional
     public void updateMovie(int characterId, int[] movies) {
         try {
@@ -119,6 +109,6 @@ public class CharacterServiceImpl implements CharacterService {
         if (!franchiseRepository.existsById(id)) {
             throw new FranchiseNotFoundException(id);
         }
-        return characterRepository.findAllCharactersInAMovie(id);
+        return characterRepository.findAllCharactersInAFranchise(id);
     }
 }
