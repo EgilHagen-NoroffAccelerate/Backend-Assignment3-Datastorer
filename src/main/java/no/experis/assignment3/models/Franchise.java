@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -24,17 +22,11 @@ public class Franchise {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "franchise")
     private Set<Movie> movies;
 
-    public void updateMoviesToFranchise(List<Integer> movieId) {
-        Iterator<Movie> iter = movies.iterator();
-        Set<Movie> delete = new HashSet<>();
-        while (iter.hasNext()) {
-            Movie moviee = iter.next();
-            delete.add(moviee);
-        }
-        movies.removeAll(delete);
-        for (int id : movieId) {
+    public void updateMovieToFranchise(List<Integer> movieId) {
+        movies.clear();
+        for (Integer movieIds : movieId) {
             Movie movie = new Movie();
-            movie.setId(id);
+            movie.setId(movieIds);
             movies.add(movie);
         }
     }

@@ -57,14 +57,6 @@ public class MovieServiceImpl implements MovieService {
         return movieRepository.findByFranchise(franchise);
     }
 
-    @Override
-    @Transactional
-    public Franchise updateMoviesInFranchise(List<Integer> movieId, int id) {
-        Franchise franchise = franchiseRepository.findById(id).get();
-        franchise.updateMoviesToFranchise(movieId);
-        return franchiseRepository.save(franchise);
-    }
-
 
 
     /*@Override

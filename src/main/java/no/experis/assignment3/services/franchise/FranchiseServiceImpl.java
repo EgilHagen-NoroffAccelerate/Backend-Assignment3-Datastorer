@@ -1,5 +1,6 @@
 package no.experis.assignment3.services.franchise;
 
+import jakarta.transaction.Transactional;
 import no.experis.assignment3.exceptions.FranchiseNotFoundException;
 import no.experis.assignment3.models.Franchise;
 import no.experis.assignment3.repositories.FranchiseRepository;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class FranchiseServiceImpl implements FranchiseService {
@@ -44,5 +46,13 @@ public class FranchiseServiceImpl implements FranchiseService {
     @Override
     public void deleteById(Integer id) {
         franchiseRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public Franchise updateMovieInFranchise(List<Integer> movieId, int id) {
+        Franchise franchise = franchiseRepository.findById(id).get();
+        franchise.updateMovieToFranchise(movieId);
+        return franchiseRepository.save(franchise);
     }
 }

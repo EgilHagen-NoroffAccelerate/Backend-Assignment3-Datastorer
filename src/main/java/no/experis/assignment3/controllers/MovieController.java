@@ -159,28 +159,6 @@ public class MovieController {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Update movies in specified Franchise")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "Success",
-                    content = @Content),
-            @ApiResponse(responseCode = "400",
-                    description = "Malformed request",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorAttributeOptions.class))}),
-            @ApiResponse(responseCode = "404",
-                    description = "Not found",
-                    content = @Content),
-            @ApiResponse(responseCode = "500",
-                    description = "Internal server error",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorAttributeOptions.class))})
-    })
-    @PutMapping("movie/franchise/{id}")
-    public ResponseEntity updateMoviesInFranchise(@RequestBody List<Integer> movieId, @PathVariable int id) {
-        movieService.updateMoviesInFranchise(movieId, id);
-        return ResponseEntity.noContent().build();
-    }
 }
 
 

@@ -13,7 +13,5 @@ public interface MovieService extends CRUDService<Movie, Integer> {
 
     //void addMoviesToFranchise(Franchise franchise, List<Movie> movies);
 
-    Franchise updateMoviesInFranchise(List<Integer> movieId, int id);
-
     Movie updateCharacterInMovie(List<Integer> characterId, int id);
 }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/franchises")
@@ -132,6 +133,30 @@ public class FranchiseController {
     @DeleteMapping("{id}")
     public ResponseEntity delete(@PathVariable int id) {
         franchiseService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
+    @Operation(summary = "Update movies in specified Franchise")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Success",
+                    content = @Content),
+            @ApiResponse(responseCode = "400",
+                    description = "Malformed request",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAttributeOptions.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "Not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "500",
+                    description = "Internal server error",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAttributeOptions.class))})
+    })
+    @PutMapping("franchise/{id}")
+    public ResponseEntity updateMovieInFranchise(@RequestBody List<Integer> movieId, @PathVariable int id) {
+        franchiseService.updateMovieInFranchise(movieId, id);
         return ResponseEntity.noContent().build();
     }
 }
