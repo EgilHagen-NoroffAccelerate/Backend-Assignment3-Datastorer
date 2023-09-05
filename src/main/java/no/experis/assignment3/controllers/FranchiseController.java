@@ -6,11 +6,13 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import no.experis.assignment3.exceptions.FranchiseNotFoundException;
 import no.experis.assignment3.mappers.FranchiseMapper;
 import no.experis.assignment3.models.Franchise;
 import no.experis.assignment3.models.dto.franchise.FranchiseDTO;
 import no.experis.assignment3.models.dto.movie.MovieDTO;
 import no.experis.assignment3.services.franchise.FranchiseService;
+import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -106,6 +108,30 @@ public class FranchiseController {
         if (id != franchiseDTO.getId())
             return ResponseEntity.badRequest().build();
         franchiseService.update(franchiseMapper.franchiseDTOToFranchise(franchiseDTO));
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Delete a Franchise")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204",
+                    description = "Franchise successfully deleted",
+                    content = @Content),
+            @ApiResponse(responseCode = "400",
+                    description = "Malformed request",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAttributeOptions.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "Franchise not found with supplied ID",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = FranchiseNotFoundException.class))}),
+            @ApiResponse(responseCode = "500",
+                    description = "Internal server error",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAttributeOptions.class))})
+    })
+    @DeleteMapping("{id}")
+    public ResponseEntity delete(@PathVariable int id) {
+        franchiseService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }

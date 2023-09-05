@@ -6,10 +6,12 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import no.experis.assignment3.exceptions.CharacterNotFoundException;
 import no.experis.assignment3.mappers.CharacterMapper;
 import no.experis.assignment3.models.Character;
 import no.experis.assignment3.models.dto.character.CharacterDTO;
 import no.experis.assignment3.services.character.CharacterService;
+import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -157,6 +159,29 @@ public class CharacterController {
         return ResponseEntity.noContent().build();
     } */
 
+    @Operation(summary = "Delete a character")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204",
+                    description = "Character successfully deleted",
+                    content = @Content),
+            @ApiResponse(responseCode = "400",
+                    description = "Malformed request",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAttributeOptions.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "Character not found with supplied ID",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CharacterNotFoundException.class))}),
+            @ApiResponse(responseCode = "500",
+                    description = "Internal server error",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAttributeOptions.class))})
+    })
+    @DeleteMapping("{id}")
+    public ResponseEntity delete(@PathVariable int id) {
+        characterService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 
 }
 

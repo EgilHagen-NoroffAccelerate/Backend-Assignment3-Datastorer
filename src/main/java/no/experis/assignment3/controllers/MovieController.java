@@ -6,10 +6,12 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import no.experis.assignment3.exceptions.MovieNotFoundException;
 import no.experis.assignment3.mappers.MovieMapper;
 import no.experis.assignment3.models.Movie;
 import no.experis.assignment3.models.dto.movie.MovieDTO;
 import no.experis.assignment3.services.movie.MovieService;
+import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -105,6 +107,31 @@ public class MovieController {
             return ResponseEntity.badRequest().build();
         movieService.update(movieMapper.movieDTOToMovie(movieDTO)
         );
+        return ResponseEntity.noContent().build();
+    }
+
+
+    @Operation(summary = "Delete a Movie")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204",
+                    description = "Movie successfully deleted",
+                    content = @Content),
+            @ApiResponse(responseCode = "400",
+                    description = "Malformed request",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAttributeOptions.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "Movie not found with supplied ID",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MovieNotFoundException.class))}),
+            @ApiResponse(responseCode = "500",
+                    description = "Internal server error",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAttributeOptions.class))})
+    })
+    @DeleteMapping("{id}")
+    public ResponseEntity delete(@PathVariable int id) {
+        movieService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }
