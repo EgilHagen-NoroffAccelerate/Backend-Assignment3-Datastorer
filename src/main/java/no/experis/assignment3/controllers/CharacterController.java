@@ -69,9 +69,8 @@ public class CharacterController {
             @ApiResponse(
                     responseCode = "200",
                     description = "Success",
-                    content =
-                    @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = CharacterDTO.class))
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CharacterDTO.class))}
             ),
             @ApiResponse(
                     responseCode = "404",

@@ -48,7 +48,7 @@ public class MovieController {
                     description = "Success",
                     content =
                     @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = CharacterDTO.class)))
+                            array = @ArraySchema(schema = @Schema(implementation = MovieDTO.class)))
             ),
             @ApiResponse(
                     responseCode = "404",
@@ -77,8 +77,7 @@ public class MovieController {
                     description = "Success",
                     content = {
                             @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = MovieDTO.class))
-                    }
+                                    schema = @Schema(implementation = MovieDTO.class))}
             ),
             @ApiResponse(
                     responseCode = "404",
@@ -105,7 +104,7 @@ public class MovieController {
                     responseCode = "201",
                     description = "Created",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = CharacterDTO.class))
+                            schema = @Schema(implementation = MovieDTO.class))
             ),
             @ApiResponse(
                     responseCode = "404",

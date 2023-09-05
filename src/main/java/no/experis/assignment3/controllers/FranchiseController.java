@@ -39,7 +39,7 @@ public class FranchiseController {
      *
      * @return ResponseEntity with a list of franchises in JSON format.
      */
-    @GetMapping("{id}")
+    @GetMapping
     @Operation(summary = "Gets all franchises")
     @ApiResponses(value = {
             @ApiResponse(
@@ -73,10 +73,8 @@ public class FranchiseController {
             @ApiResponse(
                     responseCode = "200",
                     description = "Success",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = FranchiseDTO.class))
-                    }
+                    content = {@Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = FranchiseDTO.class))}
             ),
             @ApiResponse(
                     responseCode = "404",
@@ -103,7 +101,7 @@ public class FranchiseController {
                     responseCode = "201",
                     description = "Created",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = MovieDTO.class))
+                            schema = @Schema(implementation = FranchiseDTO.class))
             ),
             @ApiResponse(responseCode = "500",
                     description = "Internal server error",
