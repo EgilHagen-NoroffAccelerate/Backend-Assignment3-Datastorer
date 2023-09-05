@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Collection;
 
 
 @RestController
@@ -159,8 +158,8 @@ public class CharacterController {
                             schema = @Schema(implementation = ProblemDetail.class))})
     })
     @GetMapping("movie/{id}")
-    public ResponseEntity<Collection<Character>> findAllCharactersInAMovie(@PathVariable int id) {
-        return ResponseEntity.ok(characterService.findAllCharactersInAMovie(id));
+    public ResponseEntity findAllCharactersInAMovie(@PathVariable int id) {
+        return ResponseEntity.ok(characterMapper.characterToCharacterDTO(characterService.findAllCharactersInAMovie(id)));
     }
 
 
@@ -185,8 +184,8 @@ public class CharacterController {
                     })
     })
     @GetMapping("franchise/{id}")
-    public ResponseEntity<Collection<Character>> findAllCharactersInAFranchise(@PathVariable int id) {
-        return ResponseEntity.ok(characterService.findAllCharactersInAFranchise(id));
+    public ResponseEntity findAllCharactersInAFranchise(@PathVariable int id) {
+        return ResponseEntity.ok(characterMapper.characterToCharacterDTO(characterService.findAllCharactersInAFranchise(id)));
     }
 
 
@@ -219,30 +218,6 @@ public class CharacterController {
         characterService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
-
-    /*
-    @PutMapping("{id}/movies")
-    public ResponseEntity updateMovies(@PathVariable int id, @RequestBody int[] movieIds) {
-        characterService.updateMovie(id, movieIds);
-        return ResponseEntity.noContent().build();
-    } */
-
-      /* @Operation(summary = "Get characters in a movie")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "Success",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = CharacterDTO.class))}),
-            @ApiResponse(responseCode = "404",
-                    description = "Not found",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ProblemDetail.class))
-                    })
-    })
-    @GetMapping("movie/{id}")
-    public ResponseEntity<Collection<Character>> findAllCharactersInAMovie(@PathVariable int id) {
-        return ResponseEntity.ok(characterService.findAllCharactersInAMovie(id));
-    }*/
 }
 
 

@@ -113,15 +113,4 @@ public class Movie {
             characters.add(chars);
         }
     }
-
-    /*public void removeCharacter(Character character) {
-        Iterator<Character> iter = characters.iterator();
-        while (iter.hasNext()) {
-            Character chars = iter.next();
-            if (chars.getId() == character.getId()) {
-                iter.remove();
-            }
-        }
-    }*/
-
 }
