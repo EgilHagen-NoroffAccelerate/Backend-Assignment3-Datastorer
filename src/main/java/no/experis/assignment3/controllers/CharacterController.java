@@ -117,7 +117,7 @@ public class CharacterController {
     }
 
 
-    @Operation(summary = "Get characters in a movie")
+   /* @Operation(summary = "Get characters in a movie")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Success",
@@ -129,7 +129,23 @@ public class CharacterController {
                             schema = @Schema(implementation = ProblemDetail.class))
                     })
     })
-    @GetMapping("{id}/movies")
+    @GetMapping("movie/{id}")
+    public ResponseEntity<Collection<Character>> findAllCharactersInAMovie(@PathVariable int id) {
+        return ResponseEntity.ok(characterService.findAllCharactersInAMovie(id));
+    }*/
+
+    @Operation(summary = "Get characters in a movie")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Success",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CharacterDTO.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "Characters do not exist with supplied movie ID",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProblemDetail.class))})
+    })
+    @GetMapping("movie/{id}")
     public ResponseEntity<Collection<Character>> findAllCharactersInAMovie(@PathVariable int id) {
         return ResponseEntity.ok(characterService.findAllCharactersInAMovie(id));
     }
@@ -146,7 +162,7 @@ public class CharacterController {
                             schema = @Schema(implementation = ProblemDetail.class))
                     })
     })
-    @GetMapping("{id}/franchise")
+    @GetMapping("franchise/{id}")
     public ResponseEntity<Collection<Character>> findAllCharactersInAFranchise(@PathVariable int id) {
         return ResponseEntity.ok(characterService.findAllCharactersInAFranchise(id));
     }

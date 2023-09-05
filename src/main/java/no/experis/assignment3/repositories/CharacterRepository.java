@@ -12,7 +12,10 @@ public interface CharacterRepository extends JpaRepository<Character, Integer> {
             nativeQuery = true)
     Collection<Character> findAllByName(String name);
 
-    @Query(value = "SELECT * FROM Character INNER JOIN movie_character ON movie_character.character_id = id WHERE movie_character.movie_id= ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM Character " +
+            "INNER JOIN movie_character " +
+            "ON movie_character.character_id = id " +
+            "WHERE movie_character.movie_id= ?1", nativeQuery = true)
     Collection<Character> findAllCharactersInAMovie(int id);
 
     @Query(value = "SELECT * FROM Character INNER JOIN movie_character ON movie_character.character_id = id INNER JOIN movie ON movie.id = movie_character.movie_id WHERE movie.franchise_id = ?1", nativeQuery = true)
