@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,6 +23,21 @@ public class Franchise {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "franchise")
     private Set<Movie> movies;
+
+    public void updateMoviesToFranchise(List<Integer> movieId) {
+        Iterator<Movie> iter = movies.iterator();
+        Set<Movie> delete = new HashSet<>();
+        while (iter.hasNext()) {
+            Movie moviee = iter.next();
+            delete.add(moviee);
+        }
+        movies.removeAll(delete);
+        for (int id : movieId) {
+            Movie movie = new Movie();
+            movie.setId(id);
+            movies.add(movie);
+        }
+    }
 
     @Override
     public String toString() {

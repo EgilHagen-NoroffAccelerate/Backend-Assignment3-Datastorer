@@ -114,6 +114,8 @@ public class Movie {
         }
     }
 
+
+
     /*public void removeCharacter(Character character) {
         Iterator<Character> iter = characters.iterator();
         while (iter.hasNext()) {

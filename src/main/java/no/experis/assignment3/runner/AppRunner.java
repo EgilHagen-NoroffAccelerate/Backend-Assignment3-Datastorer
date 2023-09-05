@@ -6,7 +6,6 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,8 +22,10 @@ public class AppRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        List<Integer> list = Arrays.asList(1,2,3,4,5,6);
-        movieService.updateCharacterInMovie(list, 4);
+        List<Integer> list = Arrays.asList(1, 2, 3, 5, 6);
+        //movieService.updateCharacterInMovie(list, 4);
+        movieService.updateMoviesInFranchise(list, 2);
+        // movieService.addMoviesToFranchise("NOROFF", list);
 
         //TODO
         //Check if franchiseservice and movieservice is functional with delete and add and update.

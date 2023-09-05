@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import no.experis.assignment3.exceptions.MovieNotFoundException;
 import no.experis.assignment3.models.Franchise;
 import no.experis.assignment3.models.Movie;
+import no.experis.assignment3.repositories.FranchiseRepository;
 import no.experis.assignment3.repositories.MovieRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +18,11 @@ public class MovieServiceImpl implements MovieService {
 
     private final Logger logger = LoggerFactory.getLogger(MovieServiceImpl.class);
     private final MovieRepository movieRepository;
+    private final FranchiseRepository franchiseRepository;
 
-    public MovieServiceImpl(MovieRepository movieRepository) {
+    public MovieServiceImpl(MovieRepository movieRepository, FranchiseRepository franchiseRepository) {
         this.movieRepository = movieRepository;
+        this.franchiseRepository = franchiseRepository;
     }
 
     @Override
@@ -55,12 +58,22 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
+    @Transactional
+    public Franchise updateMoviesInFranchise(List<Integer> movieId, int id) {
+        Franchise franchise = franchiseRepository.findById(id).get();
+        franchise.updateMoviesToFranchise(movieId);
+        return franchiseRepository.save(franchise);
+    }
+
+
+
+    /*@Override
     public void addMoviesToFranchise(Franchise franchise, List<Movie> movies) {
         for (Movie movie : movies) {
             movie.setFranchise(franchise);
             movieRepository.save(movie);
         }
-    }
+    }*/
 
     @Override
     @Transactional
@@ -68,7 +81,6 @@ public class MovieServiceImpl implements MovieService {
         Movie movie = movieRepository.findById(id).get();
         movie.updateCharactersToMovie(characterId);
         return movieRepository.save(movie);
-
     }
 
 }

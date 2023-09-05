@@ -137,8 +137,8 @@ public class MovieController {
     }
 
     @Operation(summary = "Update characters in specified movie")
-    @ApiResponses( value = {
-            @ApiResponse(responseCode = "204",
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
                     description = "Success",
                     content = @Content),
             @ApiResponse(responseCode = "400",
@@ -154,8 +154,31 @@ public class MovieController {
                             schema = @Schema(implementation = ErrorAttributeOptions.class))})
     })
     @PutMapping("characters/movie/{id}")
-    public ResponseEntity updateCharacterInMovie(@RequestBody List<Integer> characterId, @PathVariable int id){
-        movieService.updateCharacterInMovie(characterId,id);
+    public ResponseEntity updateCharacterInMovie(@RequestBody List<Integer> characterId, @PathVariable int id) {
+        movieService.updateCharacterInMovie(characterId, id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Update movies in specified Franchise")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Success",
+                    content = @Content),
+            @ApiResponse(responseCode = "400",
+                    description = "Malformed request",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAttributeOptions.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "Not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "500",
+                    description = "Internal server error",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAttributeOptions.class))})
+    })
+    @PutMapping("movie/franchise/{id}")
+    public ResponseEntity updateMoviesInFranchise(@RequestBody List<Integer> movieId, @PathVariable int id) {
+        movieService.updateMoviesInFranchise(movieId, id);
         return ResponseEntity.noContent().build();
     }
 }
