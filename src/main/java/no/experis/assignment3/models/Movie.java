@@ -114,8 +114,6 @@ public class Movie {
         }
     }
 
-
-
     /*public void removeCharacter(Character character) {
         Iterator<Character> iter = characters.iterator();
         while (iter.hasNext()) {
@@ -126,18 +124,4 @@ public class Movie {
         }
     }*/
 
-    /*public void updateCharactersToMovie(List<Integer> ids) {
-        Iterator<Character> iter = characters.iterator();
-        Set<Character> delete = new HashSet<>();
-        while (iter.hasNext()) {
-            Character chara = iter.next();
-            delete.add(chara);
-        }
-        characters.removeAll(delete);
-        for (int id : ids) {
-            Character chars = new Character();
-            chars.setId(id);
-            characters.add(chars);
-        }
-    }*/
 }
