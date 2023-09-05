@@ -1,5 +1,6 @@
 package no.experis.assignment3.services.movie;
 
+import jakarta.transaction.Transactional;
 import no.experis.assignment3.exceptions.MovieNotFoundException;
 import no.experis.assignment3.models.Franchise;
 import no.experis.assignment3.models.Movie;
@@ -59,6 +60,15 @@ public class MovieServiceImpl implements MovieService {
             movie.setFranchise(franchise);
             movieRepository.save(movie);
         }
+    }
+
+    @Override
+    @Transactional
+    public Movie updateCharacterInMovie(List<Integer> characterId, int id) {
+        Movie movie = movieRepository.findById(id).get();
+        movie.updateCharactersToMovie(characterId);
+        return movieRepository.save(movie);
+
     }
 
 }
